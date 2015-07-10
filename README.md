@@ -1,1 +1,1 @@
-# liftsense
+# LiftSense for Android
