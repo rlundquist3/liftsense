@@ -65,7 +65,10 @@ extern "C" {
 JNIEXPORT jstring JNICALL Java_com_rileylundquist_liftsense_MainActivity_stringFromJNI
   (JNIEnv *, jobject);
 
-JNIEXPORT void JNICALL Java_org_opencv_samples_tutorial2_Tutorial2Activity_FindFeatures(JNIEnv*, jobject, jlong addrGray, jlong addrRgba);
+//JNIEXPORT void JNICALL Java_org_opencv_samples_tutorial2_Tutorial2Activity_FindFeatures(JNIEnv*, jobject, jlong addrGray, jlong addrRgba);
+
+JNIEXPORT jint JNICALL Java_com_rileylundquist_liftsense_MainActivity_nativeDetect(JNIEnv* jenv, jobject, jstring jFileName, jlong addrRgba, jlong addrRetVal);
+
 
 #ifdef __cplusplus
 }

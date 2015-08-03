@@ -33,8 +33,6 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
 
     private static final String    TAG                 = "OCVSample::Activity";
     private static final Scalar    FACE_RECT_COLOR     = new Scalar(0, 255, 0, 255);
-    public static final int        JAVA_DETECTOR       = 0;
-    public static final int        NATIVE_DETECTOR     = 1;
 
     private MenuItem               mItemFace50;
     private MenuItem               mItemFace40;
@@ -47,9 +45,6 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
     private File                   mCascadeFile;
     private CascadeClassifier      mJavaDetector;
     private JNIDetector  mNativeDetector;
-
-    private int                    mDetectorType       = JAVA_DETECTOR;
-    private String[]               mDetectorName;
 
     private float                  mRelativeFaceSize   = 0.2f;
     private int                    mAbsoluteFaceSize   = 0;
@@ -198,5 +193,5 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
         return super.onOptionsItemSelected(item);
     }
 
-    public native String stringFromJNI();
+    //public native String stringFromJNI();
 }

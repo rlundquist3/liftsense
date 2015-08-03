@@ -20,5 +20,8 @@ public class JNIDetector {
         nativeSetFaceSize(mNativeObj, size);
     }
 
+    private long mNativeObj = 0;
+    private static native long nativeCreateObject(String cascadeName, int minFaceSize);
     private static native void nativeDetect(long thiz, long inputImage, long faces);
+    private static native void nativeSetFaceSize(long thiz, int size);
 }
