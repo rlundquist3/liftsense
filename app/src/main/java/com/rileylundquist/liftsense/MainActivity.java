@@ -45,6 +45,7 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
     private File                   mCascadeFile;
     private CascadeClassifier      mJavaDetector;
     private JNIDetector  mNativeDetector;
+    private Integer                mretVal;
 
     private float                  mRelativeFaceSize   = 0.2f;
     private int                    mAbsoluteFaceSize   = 0;
@@ -77,12 +78,12 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
                         is.close();
                         os.close();
 
-                        mJavaDetector = new CascadeClassifier(mCascadeFile.getAbsolutePath());
+                        /*mJavaDetector = new CascadeClassifier(mCascadeFile.getAbsolutePath());
                         if (mJavaDetector.empty()) {
                             Log.e(TAG, "Failed to load cascade classifier");
                             mJavaDetector = null;
                         } else
-                            Log.i(TAG, "Loaded cascade classifier from " + mCascadeFile.getAbsolutePath());
+                            Log.i(TAG, "Loaded cascade classifier from " + mCascadeFile.getAbsolutePath());*/
 
                         mNativeDetector = new JNIDetector(mCascadeFile.getAbsolutePath(), 0);
 
@@ -168,13 +169,26 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
         for (int i = 0; i < facesArray.length; i++)
             Imgproc.rectangle(mRgba, facesArray[i].tl(), facesArray[i].br(), FACE_RECT_COLOR, 3);
 
+        /*int faceFound =
+        nativeDetect(mCascadeFile.getAbsolutePath(),
+                mRgba.getNativeObjAddr()/*,mretVal.getNativeObjAddr());
+        Imgproc.rectangle(mRgba, mRgba.tl(), mRgba.br(), FACE_RECT_COLOR, 3);*/
+
         return mRgba;
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        /*getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;*/
+
+        Log.i(TAG, "called onCreateOptionsMenu");
+        mItemFace50 = menu.add("Face size 50%");
+        mItemFace40 = menu.add("Face size 40%");
+        mItemFace30 = menu.add("Face size 30%");
+        mItemFace20 = menu.add("Face size 20%");
+        //mItemType   = menu.add(mDetectorName[mDetectorType]);
         return true;
     }
 
@@ -183,15 +197,32 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        /*int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);*/
+
+        Log.i(TAG, "called onOptionsItemSelected; selected item: " + item);
+        if (item == mItemFace50)
+            setMinFaceSize(0.5f);
+        else if (item == mItemFace40)
+            setMinFaceSize(0.4f);
+        else if (item == mItemFace30)
+            setMinFaceSize(0.3f);
+        else if (item == mItemFace20)
+            setMinFaceSize(0.2f);
+        return true;
+    }
+
+    private void setMinFaceSize(float faceSize) {
+        mRelativeFaceSize = faceSize;
+        mAbsoluteFaceSize = 0;
     }
 
     //public native String stringFromJNI();
+    //public native void nativeDetect(String filename, long matAddrRgba/*, long matAddrRetVal*/);
 }
