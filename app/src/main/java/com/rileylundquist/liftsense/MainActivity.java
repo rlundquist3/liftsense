@@ -31,7 +31,7 @@ import android.view.WindowManager;
 
 public class MainActivity extends Activity implements CvCameraViewListener2 {
 
-    private static final String    TAG                 = "OCVSample::Activity";
+    private static final String    TAG                 = "Camera Activity";
     private static final Scalar    FACE_RECT_COLOR     = new Scalar(0, 255, 0, 255);
 
     private MenuItem               mItemFace50;

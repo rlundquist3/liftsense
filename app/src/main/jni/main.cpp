@@ -20,7 +20,7 @@ inline void vector_Rect_to_Mat(vector<Rect>& v_rect, Mat& mat)
 class CascadeDetectorAdapter: public DetectionBasedTracker::IDetector
 {
 public:
-    CascadeDetectorAdapter(cv::Ptr<cv::CascadeClassifier> detector):
+    CascadeDetectorAdapter(Ptr<CascadeClassifier> detector):
             IDetector(),
             Detector(detector)
     {
@@ -28,7 +28,7 @@ public:
         CV_Assert(detector);
     }
 
-    void detect(const cv::Mat &Image, std::vector<cv::Rect> &objects)
+    void detect(const Mat &Image, vector<Rect> &objects)
     {
         LOGD("CascadeDetectorAdapter::Detect: begin");
         LOGD("CascadeDetectorAdapter::Detect: scaleFactor=%.2f, minNeighbours=%d, minObjSize=(%dx%d), maxObjSize=(%dx%d)", scaleFactor, minNeighbours, minObjSize.width, minObjSize.height, maxObjSize.width, maxObjSize.height);
@@ -43,16 +43,16 @@ public:
 
 private:
     CascadeDetectorAdapter();
-    cv::Ptr<cv::CascadeClassifier> Detector;
+    Ptr<CascadeClassifier> Detector;
 };
 
 struct DetectorAgregator
 {
-    cv::Ptr<CascadeDetectorAdapter> mainDetector;
-    cv::Ptr<CascadeDetectorAdapter> trackingDetector;
+    Ptr<CascadeDetectorAdapter> mainDetector;
+    Ptr<CascadeDetectorAdapter> trackingDetector;
 
-    cv::Ptr<DetectionBasedTracker> tracker;
-    DetectorAgregator(cv::Ptr<CascadeDetectorAdapter>& _mainDetector, cv::Ptr<CascadeDetectorAdapter>& _trackingDetector):
+    Ptr<DetectionBasedTracker> tracker;
+    DetectorAgregator(Ptr<CascadeDetectorAdapter>& _mainDetector, Ptr<CascadeDetectorAdapter>& _trackingDetector):
             mainDetector(_mainDetector),
             trackingDetector(_trackingDetector)
     {
@@ -76,9 +76,9 @@ JNIEXPORT jlong JNICALL Java_com_rileylundquist_liftsense_JNIDetector_nativeCrea
 
     try
     {
-        cv::Ptr<CascadeDetectorAdapter> mainDetector = makePtr<CascadeDetectorAdapter>(
+        Ptr<CascadeDetectorAdapter> mainDetector = makePtr<CascadeDetectorAdapter>(
             makePtr<CascadeClassifier>(stdFileName));
-        cv::Ptr<CascadeDetectorAdapter> trackingDetector = makePtr<CascadeDetectorAdapter>(
+        Ptr<CascadeDetectorAdapter> trackingDetector = makePtr<CascadeDetectorAdapter>(
             makePtr<CascadeClassifier>(stdFileName));
         result = (jlong)new DetectorAgregator(mainDetector, trackingDetector);
         if (faceSize > 0)
@@ -87,9 +87,9 @@ JNIEXPORT jlong JNICALL Java_com_rileylundquist_liftsense_JNIDetector_nativeCrea
             //trackingDetector->setMinObjectSize(Size(faceSize, faceSize));
         }
     }
-    catch(cv::Exception& e)
+    catch(Exception& e)
     {
-        LOGD("nativeCreateObject caught cv::Exception: %s", e.what());
+        LOGD("nativeCreateObject caught Exception: %s", e.what());
         jclass je = jenv->FindClass("org/opencv/core/CvException");
         if(!je)
             je = jenv->FindClass("java/lang/Exception");
@@ -120,9 +120,9 @@ JNIEXPORT void JNICALL Java_com_rileylundquist_liftsense_JNIDetector_nativeDestr
             delete (DetectorAgregator*)thiz;
         }
     }
-    catch(cv::Exception& e)
+    catch(Exception& e)
     {
-        LOGD("nativeestroyObject caught cv::Exception: %s", e.what());
+        LOGD("nativeestroyObject caught Exception: %s", e.what());
         jclass je = jenv->FindClass("org/opencv/core/CvException");
         if(!je)
             je = jenv->FindClass("java/lang/Exception");
@@ -146,9 +146,9 @@ JNIEXPORT void JNICALL Java_com_rileylundquist_liftsense_JNIDetector_nativeStart
     {
         ((DetectorAgregator*)thiz)->tracker->run();
     }
-    catch(cv::Exception& e)
+    catch(Exception& e)
     {
-        LOGD("nativeStart caught cv::Exception: %s", e.what());
+        LOGD("nativeStart caught Exception: %s", e.what());
         jclass je = jenv->FindClass("org/opencv/core/CvException");
         if(!je)
             je = jenv->FindClass("java/lang/Exception");
@@ -172,9 +172,9 @@ JNIEXPORT void JNICALL Java_com_rileylundquist_liftsense_JNIDetector_nativeStop
     {
         ((DetectorAgregator*)thiz)->tracker->stop();
     }
-    catch(cv::Exception& e)
+    catch(Exception& e)
     {
-        LOGD("nativeStop caught cv::Exception: %s", e.what());
+        LOGD("nativeStop caught Exception: %s", e.what());
         jclass je = jenv->FindClass("org/opencv/core/CvException");
         if(!je)
             je = jenv->FindClass("java/lang/Exception");
@@ -202,9 +202,9 @@ JNIEXPORT void JNICALL Java_com_rileylundquist_liftsense_JNIDetector_nativeSetFa
             //((DetectorAgregator*)thiz)->trackingDetector->setMinObjectSize(Size(faceSize, faceSize));
         }
     }
-    catch(cv::Exception& e)
+    catch(Exception& e)
     {
-        LOGD("nativeStop caught cv::Exception: %s", e.what());
+        LOGD("nativeStop caught Exception: %s", e.what());
         jclass je = jenv->FindClass("org/opencv/core/CvException");
         if(!je)
             je = jenv->FindClass("java/lang/Exception");
@@ -232,9 +232,9 @@ JNIEXPORT void JNICALL Java_com_rileylundquist_liftsense_JNIDetector_nativeDetec
         ((DetectorAgregator*)thiz)->tracker->getObjects(RectFaces);
         *((Mat*)faces) = Mat(RectFaces, true);
     }
-    catch(cv::Exception& e)
+    catch(Exception& e)
     {
-        LOGD("nativeCreateObject caught cv::Exception: %s", e.what());
+        LOGD("nativeCreateObject caught Exception: %s", e.what());
         jclass je = jenv->FindClass("org/opencv/core/CvException");
         if(!je)
             je = jenv->FindClass("java/lang/Exception");
