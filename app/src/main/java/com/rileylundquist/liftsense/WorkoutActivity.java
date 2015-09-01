@@ -39,7 +39,6 @@ public class WorkoutActivity extends  ListActivity {
         super.onListItemClick(list, view, position, id);
         String selectedItem = (String) getListView().getItemAtPosition(position);
 
-        Toast.makeText(getApplicationContext(), selectedItem + " clicked", Toast.LENGTH_LONG).show();
     }
 
     @Override
