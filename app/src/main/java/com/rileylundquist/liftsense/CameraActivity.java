@@ -1,51 +1,50 @@
 package com.rileylundquist.liftsense;
 
+import android.app.Activity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import org.opencv.android.BaseLoaderCallback;
+import org.opencv.android.CameraBridgeViewBase;
+import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
+import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
+import org.opencv.android.LoaderCallbackInterface;
+import org.opencv.android.OpenCVLoader;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfRect;
+import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.opencv.android.BaseLoaderCallback;
-import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
-import org.opencv.android.LoaderCallbackInterface;
-import org.opencv.android.OpenCVLoader;
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfRect;
-import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
-import org.opencv.core.Size;
-import org.opencv.android.CameraBridgeViewBase;
-import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
-import org.opencv.objdetect.CascadeClassifier;
-import org.opencv.imgproc.Imgproc;
 
-import android.app.Activity;
-import android.content.Context;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.WindowManager;
+public class CameraActivity extends Activity implements CvCameraViewListener2 {
 
-
-public class MainActivity extends Activity implements CvCameraViewListener2 {
-
-    private static final String    TAG                 = "Camera Activity";
+    private static final String    TAG                 = "Camera Fragment";
     private static final Scalar    FACE_RECT_COLOR     = new Scalar(0, 255, 0, 255);
 
-    private MenuItem               mItemFace50;
-    private MenuItem               mItemFace40;
-    private MenuItem               mItemFace30;
-    private MenuItem               mItemFace20;
-    private MenuItem               mItemType;
+//    private MenuItem               mItemFace50;
+//    private MenuItem               mItemFace40;
+//    private MenuItem               mItemFace30;
+//    private MenuItem               mItemFace20;
+//    private MenuItem               mItemType;
 
     private Mat                    mRgba;
     private Mat                    mGray;
     private File                   mCascadeFile;
-    private CascadeClassifier      mJavaDetector;
-    private JNIDetector  mNativeDetector;
-    private Integer                mretVal;
+    //private CascadeClassifier      mJavaDetector;
+    private JNIDetector            mNativeDetector;
+    //private Integer                mretVal;
 
     private float                  mRelativeFaceSize   = 0.2f;
     private int                    mAbsoluteFaceSize   = 0;
@@ -66,8 +65,9 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
                     try {
                         // load cascade file from application resources
                         InputStream is = getResources().openRawResource(R.raw.lbpcascade_frontalface);
-                        File cascadeDir = getDir("cascade", Context.MODE_PRIVATE);
-                        mCascadeFile = new File(cascadeDir, "lbpcascade_frontalface.xml");
+                        File cascadeDir = new File("/res/raw/") /*getDir("cascade", Context.MODE_PRIVATE)*/;
+                        //mCascadeFile = new File(cascadeDir, "lbpcascade_frontalface.xml");
+                        mCascadeFile = new File(cascadeDir, "haarcascade_frontalface_alt.xml");
                         FileOutputStream os = new FileOutputStream(mCascadeFile);
 
                         byte[] buffer = new byte[4096];
@@ -105,9 +105,9 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.fragment_camera);
 
         mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.camera_view);
         mOpenCvCameraView.setCvCameraViewListener(this);
@@ -177,18 +177,18 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
         return mRgba;
     }
 
-    @Override
+    //@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         /*getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;*/
 
-        Log.i(TAG, "called onCreateOptionsMenu");
+        /*Log.i(TAG, "called onCreateOptionsMenu");
         mItemFace50 = menu.add("Face size 50%");
         mItemFace40 = menu.add("Face size 40%");
         mItemFace30 = menu.add("Face size 30%");
         mItemFace20 = menu.add("Face size 20%");
-        //mItemType   = menu.add(mDetectorName[mDetectorType]);
+        //mItemType   = menu.add(mDetectorName[mDetectorType]);*/
         return true;
     }
 
@@ -206,7 +206,7 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
 
         return super.onOptionsItemSelected(item);*/
 
-        Log.i(TAG, "called onOptionsItemSelected; selected item: " + item);
+        /*Log.i(TAG, "called onOptionsItemSelected; selected item: " + item);
         if (item == mItemFace50)
             setMinFaceSize(0.5f);
         else if (item == mItemFace40)
@@ -214,7 +214,7 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
         else if (item == mItemFace30)
             setMinFaceSize(0.3f);
         else if (item == mItemFace20)
-            setMinFaceSize(0.2f);
+            setMinFaceSize(0.2f);*/
         return true;
     }
 
