@@ -1,13 +1,13 @@
 package com.rileylundquist.liftsense;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,7 @@ import java.util.List;
 
 public class WorkoutActivity extends  ListActivity {
 
+    public static final String EXTRA_EXERCISE = "com.rileylundquist.liftsense.EXERCISE";
     private List<String> workoutItems;
 
     @Override
@@ -37,8 +38,11 @@ public class WorkoutActivity extends  ListActivity {
     @Override
     protected void onListItemClick(ListView list, View view, int position, long id) {
         super.onListItemClick(list, view, position, id);
-        String selectedItem = (String) getListView().getItemAtPosition(position);
+        String selectedExercise = (String) getListView().getItemAtPosition(position);
 
+        Intent intent = new Intent(this, CameraActivity.class);
+        intent.putExtra(EXTRA_EXERCISE, selectedExercise);
+        startActivity(intent);
     }
 
     @Override

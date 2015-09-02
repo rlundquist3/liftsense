@@ -1,14 +1,13 @@
 package com.rileylundquist.liftsense;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
@@ -65,9 +64,8 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
                     try {
                         // load cascade file from application resources
                         InputStream is = getResources().openRawResource(R.raw.lbpcascade_frontalface);
-                        File cascadeDir = new File("/res/raw/") /*getDir("cascade", Context.MODE_PRIVATE)*/;
-                        //mCascadeFile = new File(cascadeDir, "lbpcascade_frontalface.xml");
-                        mCascadeFile = new File(cascadeDir, "haarcascade_frontalface_alt.xml");
+                        File cascadeDir = getDir("cascade", Context.MODE_PRIVATE);
+                        mCascadeFile = new File(cascadeDir, "lbpcascade_frontalface.xml");
                         FileOutputStream os = new FileOutputStream(mCascadeFile);
 
                         byte[] buffer = new byte[4096];
@@ -107,10 +105,15 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_camera);
+        setContentView(R.layout.activity_camera);
 
         mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.camera_view);
         mOpenCvCameraView.setCvCameraViewListener(this);
+
+        Intent intent = getIntent();
+        String exercise = intent.getStringExtra(WorkoutActivity.EXTRA_EXERCISE);
+
+        Toast.makeText(this, "Capture for " + exercise, Toast.LENGTH_SHORT);
     }
 
     @Override
