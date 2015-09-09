@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">LiftSense</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_pager">PagerActivity</string>
     <string name="title_activity_workout">WorkoutActivity</string>
+    <string-array name="workout_item_options">
+        <item>Edit</item>
+        <item>Camera</item>
+    </string-array>
 </resources>

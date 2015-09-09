@@ -1,11 +1,14 @@
 package com.rileylundquist.liftsense;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -17,6 +20,7 @@ public class WorkoutActivity extends  ListActivity {
 
     public static final String EXTRA_EXERCISE = "com.rileylundquist.liftsense.EXERCISE";
     private List<String> workoutItems;
+    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getApplicationContext());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,8 @@ public class WorkoutActivity extends  ListActivity {
             workoutItems.add("exercise " + Integer.toString(j));
 
         setupAdapter();
+
+        setupLongClick();
     }
 
     private void setupAdapter() {
@@ -35,9 +41,35 @@ public class WorkoutActivity extends  ListActivity {
         setListAdapter(arrayAdapter);
     }
 
+    private void setupLongClick() {
+        this.getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                dialogBuilder.setItems(R.array.workout_item_options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == 0)
+                            editExercise(position);
+                        else
+                            goToCameraForExercise(position);
+                    }
+                });
+                return true;
+            }
+        });
+    }
+
     @Override
     protected void onListItemClick(ListView list, View view, int position, long id) {
         super.onListItemClick(list, view, position, id);
+        goToCameraForExercise(position);
+    }
+
+    protected void editExercise(int position) {
+        
+    }
+
+    protected void goToCameraForExercise(int position) {
         String selectedExercise = (String) getListView().getItemAtPosition(position);
 
         Intent intent = new Intent(this, CameraActivity.class);
