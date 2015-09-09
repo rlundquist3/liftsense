@@ -22,7 +22,6 @@ import java.util.List;
  */
 public class ExerciseListFragment extends ListFragment {
 
-    private List<String> workoutItems;
     /**
      * The serialization (saved instance state) Bundle key representing the
      * activated item position. Only used on tablets.
@@ -78,6 +77,8 @@ public class ExerciseListFragment extends ListFragment {
                 R.layout.workout_list_item,
                 R.id.listItem,
                 getResources().getStringArray(R.array.exercise_list)));
+
+        DummyContent.addItem(new DummyContent.DummyItem());
     }
 
     @Override
