@@ -9,7 +9,8 @@ import android.widget.ListView;
 
 import com.rileylundquist.liftsense.dummy.DummyContent;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * A list fragment representing a list of Exercises. This fragment
@@ -22,6 +23,7 @@ import java.util.List;
  */
 public class ExerciseListFragment extends ListFragment {
 
+    private ArrayList<String> exerciseList;
     /**
      * The serialization (saved instance state) Bundle key representing the
      * activated item position. Only used on tablets.
@@ -72,13 +74,14 @@ public class ExerciseListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        String[] exerciseArray = getResources().getStringArray(R.array.exercise_list);
+        exerciseList = new ArrayList<String>(Arrays.asList(exerciseArray));
+
         setListAdapter(new ArrayAdapter<String>(
                 getActivity(),
                 R.layout.workout_list_item,
                 R.id.listItem,
-                getResources().getStringArray(R.array.exercise_list)));
-
-        DummyContent.addItem(new DummyContent.DummyItem());
+                exerciseList));
     }
 
     @Override
@@ -118,7 +121,8 @@ public class ExerciseListFragment extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+        //mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+        mCallbacks.onItemSelected(exerciseList.get(position));
     }
 
     @Override
