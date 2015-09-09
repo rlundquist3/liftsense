@@ -4,8 +4,22 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_pager">PagerActivity</string>
     <string name="title_activity_workout">WorkoutActivity</string>
-    <string-array name="workout_item_options">
-        <item>Edit</item>
-        <item>Camera</item>
+    <string-array name="exercise_list">
+        <item>exercise 1</item>
+        <item>exercise 2</item>
+        <item>exercise 3</item>
+        <item>exercise 4</item>
+        <item>exercise 5</item>
+        <item>exercise 6</item>
+        <item>exercise 7</item>
+        <item>exercise 8</item>
+        <item>exercise 9</item>
     </string-array>
+    <string name="title_activity_home">HomeActivity</string>
+    <string-array name="unit_selection">
+        <item>lbs</item>
+        <item>kg</item>
+    </string-array>
+    <string name="title_exercise_list">Exercises</string>
+    <string name="title_exercise_detail">Exercise Detail</string>
 </resources>

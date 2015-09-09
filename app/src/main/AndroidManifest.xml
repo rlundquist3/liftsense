@@ -28,12 +28,29 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".WorkoutActivity"
-            android:label="@string/title_activity_workout" >
+            android:name=".HomeActivity"
+            android:label="@string/title_activity_home" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ExerciseListActivity"
+            android:label="@string/title_exercise_list"
+            android:parentActivityName=".HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.rileylundquist.liftsense.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".ExerciseDetailActivity"
+            android:label="@string/title_exercise_detail"
+            android:parentActivityName=".ExerciseListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.rileylundquist.liftsense.ExerciseListActivity" />
         </activity>
     </application>
 

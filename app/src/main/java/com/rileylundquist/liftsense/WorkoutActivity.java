@@ -42,7 +42,7 @@ public class WorkoutActivity extends  ListActivity {
     }
 
     private void setupLongClick() {
-        this.getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        /*this.getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 dialogBuilder.setItems(R.array.workout_item_options, new DialogInterface.OnClickListener() {
@@ -56,7 +56,7 @@ public class WorkoutActivity extends  ListActivity {
                 });
                 return true;
             }
-        });
+        });*/
     }
 
     @Override
@@ -66,7 +66,7 @@ public class WorkoutActivity extends  ListActivity {
     }
 
     protected void editExercise(int position) {
-        
+
     }
 
     protected void goToCameraForExercise(int position) {

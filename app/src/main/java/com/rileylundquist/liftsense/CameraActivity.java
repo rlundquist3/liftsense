@@ -111,9 +111,9 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
         mOpenCvCameraView.setCvCameraViewListener(this);
 
         Intent intent = getIntent();
-        String exercise = intent.getStringExtra(WorkoutActivity.EXTRA_EXERCISE);
+        //String exercise = intent.getStringExtra(WorkoutActivity.EXTRA_EXERCISE);
 
-        Toast.makeText(this, "Capture for " + exercise, Toast.LENGTH_SHORT);
+        //Toast.makeText(this, "Capture for " + exercise, Toast.LENGTH_SHORT);
     }
 
     @Override
