@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.rileylundquist.liftsense.dummy.DummyContent;
+import com.rileylundquist.liftsense.WorkoutContent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
