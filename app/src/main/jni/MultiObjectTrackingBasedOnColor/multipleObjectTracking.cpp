@@ -3,11 +3,11 @@
 // modified by: Ahmad Kaifi, Hassan Althobaiti
 
 //Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software")
-//, to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+//, to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
 //and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 //The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 //THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+//FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 //LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 //IN THE SOFTWARE.
 
@@ -42,7 +42,7 @@ const string windowName2 = "Thresholded Image";
 const string windowName3 = "After Morphological Operations";
 const string trackbarWindowName = "Trackbars";
 
-//The following for canny edge detect
+//The following for canny edge detec
 Mat dst, detected_edges;
 Mat src, src_gray;
 int edgeThresh = 1;
@@ -78,9 +78,9 @@ void createTrackbars(){
 	sprintf( TrackbarName, "V_MAX", V_MAX);
 	//create trackbars and insert them into window
 	//3 parameters are: the address of the variable that is changing when the trackbar is moved(eg.H_LOW),
-	//the max value the trackbar can move (eg. H_HIGH), 
+	//the max value the trackbar can move (eg. H_HIGH),
 	//and the function that is called whenever the trackbar is moved(eg. on_trackbar)
-	//                                  ---->    ---->     ---->      
+	//                                  ---->    ---->     ---->
 	createTrackbar( "H_MIN", trackbarWindowName, &H_MIN, H_MAX, on_trackbar );
 	createTrackbar( "H_MAX", trackbarWindowName, &H_MAX, H_MAX, on_trackbar );
 	createTrackbar( "S_MIN", trackbarWindowName, &S_MIN, S_MAX, on_trackbar );
@@ -89,13 +89,23 @@ void createTrackbars(){
 	createTrackbar( "V_MAX", trackbarWindowName, &V_MAX, V_MAX, on_trackbar );
 }
 
-void drawObject(vector<Object> theObjects,Mat &frame, Mat &temp, vector< vector<Point> > contours, vector<Vec4i> hierarchy){
+void drawObject(vector<Object> theObjects,Mat &frame, Mat &temp, vector<vector<Point>> contours, vector<Vec4i> hierarchy){
 
 	for(int i =0; i<theObjects.size(); i++){
 	cv::drawContours(frame,contours,i,theObjects.at(i).getColor(),3,8,hierarchy);
 	cv::circle(frame,cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()),5,theObjects.at(i).getColor());
 	cv::putText(frame,intToString(theObjects.at(i).getXPos())+ " , " + intToString(theObjects.at(i).getYPos()),cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()+20),1,1,theObjects.at(i).getColor());
 	cv::putText(frame,theObjects.at(i).getType(),cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()-20),1,2,theObjects.at(i).getColor());
+	}
+}
+
+void drawObject(vector<Object> theObjects,Mat &frame){
+
+	for(int i =0; i<theObjects.size(); i++){
+
+	cv::circle(frame,cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()),10,cv::Scalar(0,0,255));
+	cv::putText(frame,intToString(theObjects.at(i).getXPos())+ " , " + intToString(theObjects.at(i).getYPos()),cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()+20),1,1,Scalar(0,255,0));
+	cv::putText(frame,theObjects.at(i).getType(),cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()-30),1,2,theObjects.at(i).getColor());
 	}
 }
 
@@ -112,6 +122,56 @@ void morphOps(Mat &thresh){
 
 	dilate(thresh,thresh,dilateElement);
 	dilate(thresh,thresh,dilateElement);
+}
+void trackFilteredObject(Mat threshold,Mat HSV, Mat &cameraFeed)
+{
+	vector <Object> objects;
+	Mat temp;
+	threshold.copyTo(temp);
+	//these two vectors needed for output of findContours
+	vector< vector<Point> > contours;
+	vector<Vec4i> hierarchy;
+	//find contours of filtered image using openCV findContours function
+	findContours(temp,contours,hierarchy,CV_RETR_CCOMP,CV_CHAIN_APPROX_SIMPLE );
+	//use moments method to find our filtered object
+	double refArea = 0;
+	bool objectFound = false;
+	if (hierarchy.size() > 0) {
+		int numObjects = hierarchy.size();
+		//if number of objects greater than MAX_NUM_OBJECTS we have a noisy filter
+		if(numObjects<MAX_NUM_OBJECTS)
+		{
+			for (int index = 0; index >= 0; index = hierarchy[index][0])
+			{
+				Moments moment = moments((cv::Mat)contours[index]);
+				double area = moment.m00;
+				//if the area is less than 20 px by 20px then it is probably just noise
+				//if the area is the same as the 3/2 of the image size, probably just a bad filter
+				//we only want the object with the largest area so we safe a reference area each
+				//iteration and compare it to the area in the next iteration.
+				if(area>MIN_OBJECT_AREA)
+				{
+					Object object;
+
+					object.setXPos(moment.m10/area);
+					object.setYPos(moment.m01/area);
+
+					objects.push_back(object);
+
+					objectFound = true;
+
+				}
+				else objectFound = false;
+			}
+			//let user know you found an object
+			if(objectFound ==true)
+			{
+				//draw object location on screen
+				drawObject(objects,cameraFeed);
+			}
+		}
+		else putText(cameraFeed,"TOO MUCH NOISE! ADJUST FILTER",Point(0,50),1,2,Scalar(0,0,255),2);
+	}
 }
 
 void trackFilteredObject(Object theObject,Mat threshold,Mat HSV, Mat &cameraFeed){
@@ -143,7 +203,7 @@ void trackFilteredObject(Object theObject,Mat threshold,Mat HSV, Mat &cameraFeed
 				if(area>MIN_OBJECT_AREA){
 
 					Object object;
-					
+
 					object.setXPos(moment.m10/area);
 					object.setYPos(moment.m01/area);
 					object.setType(theObject.getType());
@@ -167,8 +227,8 @@ void trackFilteredObject(Object theObject,Mat threshold,Mat HSV, Mat &cameraFeed
 int main(int argc, char* argv[])
 {
 	//if we would like to calibrate our filter values, set to true.
-	bool calibrationMode = false;
-	
+	bool calibrationMode = true;
+
 	//Matrix to store each frame of the webcam feed
 	Mat cameraFeed;
 	Mat threshold;
@@ -210,8 +270,8 @@ int main(int argc, char* argv[])
 			inRange(HSV,Scalar(H_MIN,S_MIN,V_MIN),Scalar(H_MAX,S_MAX,V_MAX),threshold);
 			morphOps(threshold);
 			imshow(windowName2,threshold);
-		
-		//the folowing for canny edge detec	  		
+
+		//the folowing for canny edge detec
 			/// Create a matrix of the same type and size as src (for dst)
 	  		dst.create( src.size(), src.type() );
 	  		/// Convert the image to grayscale
@@ -219,7 +279,7 @@ int main(int argc, char* argv[])
 	  		/// Create a window
 	  		namedWindow( window_name, CV_WINDOW_AUTOSIZE );
 	  		/// Create a Trackbar for user to enter threshold
-	  		createTrackbar( "Min Threshold:", window_name, &lowThreshold, max_lowThreshold, CannyThreshold );
+	  		createTrackbar( "Min Threshold:", window_name, &lowThreshold, max_lowThreshold);
 	  		/// Show the image
 			trackFilteredObject(threshold,HSV,cameraFeed);
 		}
@@ -250,7 +310,7 @@ int main(int argc, char* argv[])
 			trackFilteredObject(green,threshold,HSV,cameraFeed);
 
 		}
-		//show frames 
+		//show frames
 		//imshow(windowName2,threshold);
 
 		imshow(windowName,cameraFeed);

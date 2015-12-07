@@ -15,6 +15,7 @@ import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
 import org.opencv.core.Rect;
@@ -106,6 +107,7 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+        //getActionBar().hide();
 
         mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.camera_view);
         mOpenCvCameraView.setCvCameraViewListener(this);
@@ -153,9 +155,14 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
 
         mRgba = inputFrame.rgba();
-        mGray = inputFrame.gray();
+        //mGray = inputFrame.gray();
 
-        if (mAbsoluteFaceSize == 0) {
+        Mat mRgbaT = mRgba.t();
+        Core.flip(mRgba.t(), mRgbaT, 1);
+        Imgproc.resize(mRgbaT, mRgbaT, mRgba.size());
+        return mRgbaT;
+        
+        /*if (mAbsoluteFaceSize == 0) {
             int height = mGray.rows();
             if (Math.round(height * mRelativeFaceSize) > 0) {
                 mAbsoluteFaceSize = Math.round(height * mRelativeFaceSize);
@@ -177,7 +184,7 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
                 mRgba.getNativeObjAddr()/*,mretVal.getNativeObjAddr());
         Imgproc.rectangle(mRgba, mRgba.tl(), mRgba.br(), FACE_RECT_COLOR, 3);*/
 
-        return mRgba;
+        //return mRgba;
     }
 
     //@Override
