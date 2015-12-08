@@ -11,12 +11,14 @@
 //LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 //IN THE SOFTWARE.
 
-#include <sstream>
+/*#include <sstream>
 #include <string>
 #include <iostream>
 #include <vector>
 
-#include "Object.h"
+#include "Object.h"*/
+
+#include "MultipleObjectTracking.h"
 
 
 //initial min and max HSV filter values.
@@ -224,13 +226,20 @@ void trackFilteredObject(Object theObject,Mat threshold,Mat HSV, Mat &cameraFeed
 	}
 }
 
-int main(int argc, char* argv[])
+/**
+ * Formerly main--changed to be function called by main.cpp
+ *
+ * Where tracking methods call drawObject,
+ * values need to be passed so this can instead be done in CameraActivity
+ */
+//int main(int argc, char* argv[])
+void detect(jlong imageRgba)
 {
 	//if we would like to calibrate our filter values, set to true.
 	bool calibrationMode = true;
 
 	//Matrix to store each frame of the webcam feed
-	Mat cameraFeed;
+	Mat cameraFeed = (Mat*)imageRgba;
 	Mat threshold;
 	Mat HSV;
 
@@ -238,6 +247,8 @@ int main(int argc, char* argv[])
 		//create slider bars for HSV filtering
 		createTrackbars();
 	}
+
+	/*
 	//video capture object to acquire webcam feed
 	VideoCapture capture;
 	//open capture object at location zero (default location for webcam)
@@ -245,17 +256,19 @@ int main(int argc, char* argv[])
 	//set height and width of capture frame
 	capture.set(CV_CAP_PROP_FRAME_WIDTH,FRAME_WIDTH);
 	capture.set(CV_CAP_PROP_FRAME_HEIGHT,FRAME_HEIGHT);
+	 */
+
 	//start an infinite loop where webcam feed is copied to cameraFeed matrix
 	//all of our operations will be performed within this loop
 	waitKey(1000);
 	while(1){
 		//store image to matrix
-		capture.read(cameraFeed);
+		//capture.read(cameraFeed);
 
 		src = cameraFeed;
 
   		if( !src.data )
-  		{ return -1; }
+			return -1;
 
 		//convert frame from BGR to HSV colorspace
 		cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);

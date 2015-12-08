@@ -160,6 +160,13 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
         Mat mRgbaT = mRgba.t();
         Core.flip(mRgba.t(), mRgbaT, 1);
         Imgproc.resize(mRgbaT, mRgbaT, mRgba.size());
+
+        /**
+         * Pass Mat to native environment
+         * Return outlines from native
+         * Draw returned outlines on frame
+         */
+
         return mRgbaT;
         
         /*if (mAbsoluteFaceSize == 0) {
