@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.rileylundquist.liftsense.colordetect.ColorDetect;
+
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
@@ -47,6 +49,8 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
 
     private float                  mRelativeFaceSize   = 0.2f;
     private int                    mAbsoluteFaceSize   = 0;
+
+    private ColorDetect            colorDetect;
 
     private CameraBridgeViewBase   mOpenCvCameraView;
 
@@ -109,6 +113,8 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
 
         mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.camera_view);
         mOpenCvCameraView.setCvCameraViewListener(this);
+
+        colorDetect = new ColorDetect();
 
         Intent intent = getIntent();
         //String exercise = intent.getStringExtra(WorkoutActivity.EXTRA_EXERCISE);
@@ -177,7 +183,7 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
                 mRgba.getNativeObjAddr()/*,mretVal.getNativeObjAddr());
         Imgproc.rectangle(mRgba, mRgba.tl(), mRgba.br(), FACE_RECT_COLOR, 3);*/
 
-        return mRgba;
+        return colorDetect.detect(mRgba);
     }
 
     //@Override
