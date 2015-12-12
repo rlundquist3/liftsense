@@ -58,39 +58,39 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
                 {
                     Log.i(TAG, "OpenCV loaded successfully");
 
-                    // Load native library after(!) OpenCV initialization
-                    System.loadLibrary("liftSenseCV");
-
-                    try {
-                        // load cascade file from application resources
-                        InputStream is = getResources().openRawResource(R.raw.lbpcascade_frontalface);
-                        File cascadeDir = getDir("cascade", Context.MODE_PRIVATE);
-                        mCascadeFile = new File(cascadeDir, "lbpcascade_frontalface.xml");
-                        FileOutputStream os = new FileOutputStream(mCascadeFile);
-
-                        byte[] buffer = new byte[4096];
-                        int bytesRead;
-                        while ((bytesRead = is.read(buffer)) != -1) {
-                            os.write(buffer, 0, bytesRead);
-                        }
-                        is.close();
-                        os.close();
-
-                        /*mJavaDetector = new CascadeClassifier(mCascadeFile.getAbsolutePath());
-                        if (mJavaDetector.empty()) {
-                            Log.e(TAG, "Failed to load cascade classifier");
-                            mJavaDetector = null;
-                        } else
-                            Log.i(TAG, "Loaded cascade classifier from " + mCascadeFile.getAbsolutePath());*/
-
-                        mNativeDetector = new JNIDetector(mCascadeFile.getAbsolutePath(), 0);
-
-                        cascadeDir.delete();
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        Log.e(TAG, "Failed to load cascade. Exception thrown: " + e);
-                    }
+//                    // Load native library after(!) OpenCV initialization
+//                    System.loadLibrary("liftSenseCV");
+//
+//                    try {
+//                        // load cascade file from application resources
+//                        InputStream is = getResources().openRawResource(R.raw.lbpcascade_frontalface);
+//                        File cascadeDir = getDir("cascade", Context.MODE_PRIVATE);
+//                        mCascadeFile = new File(cascadeDir, "lbpcascade_frontalface.xml");
+//                        FileOutputStream os = new FileOutputStream(mCascadeFile);
+//
+//                        byte[] buffer = new byte[4096];
+//                        int bytesRead;
+//                        while ((bytesRead = is.read(buffer)) != -1) {
+//                            os.write(buffer, 0, bytesRead);
+//                        }
+//                        is.close();
+//                        os.close();
+//
+//                        /*mJavaDetector = new CascadeClassifier(mCascadeFile.getAbsolutePath());
+//                        if (mJavaDetector.empty()) {
+//                            Log.e(TAG, "Failed to load cascade classifier");
+//                            mJavaDetector = null;
+//                        } else
+//                            Log.i(TAG, "Loaded cascade classifier from " + mCascadeFile.getAbsolutePath());*/
+//
+//                        mNativeDetector = new JNIDetector(mCascadeFile.getAbsolutePath(), 0);
+//
+//                        cascadeDir.delete();
+//
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                        Log.e(TAG, "Failed to load cascade. Exception thrown: " + e);
+//                    }
 
                     mOpenCvCameraView.enableView();
                 } break;
@@ -153,24 +153,24 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
 
         mRgba = inputFrame.rgba();
-        mGray = inputFrame.gray();
+        //mGray = inputFrame.gray();
 
-        if (mAbsoluteFaceSize == 0) {
-            int height = mGray.rows();
-            if (Math.round(height * mRelativeFaceSize) > 0) {
-                mAbsoluteFaceSize = Math.round(height * mRelativeFaceSize);
-            }
-            mNativeDetector.setMinFaceSize(mAbsoluteFaceSize);
-        }
-
-        MatOfRect faces = new MatOfRect();
-
-        if (mNativeDetector != null)
-            mNativeDetector.detect(mGray, faces);
-
-        Rect[] facesArray = faces.toArray();
-        for (int i = 0; i < facesArray.length; i++)
-            Imgproc.rectangle(mRgba, facesArray[i].tl(), facesArray[i].br(), FACE_RECT_COLOR, 3);
+//        if (mAbsoluteFaceSize == 0) {
+//            int height = mGray.rows();
+//            if (Math.round(height * mRelativeFaceSize) > 0) {
+//                mAbsoluteFaceSize = Math.round(height * mRelativeFaceSize);
+//            }
+//            mNativeDetector.setMinFaceSize(mAbsoluteFaceSize);
+//        }
+//
+//        MatOfRect faces = new MatOfRect();
+//
+//        if (mNativeDetector != null)
+//            mNativeDetector.detect(mGray, faces);
+//
+//        Rect[] facesArray = faces.toArray();
+//        for (int i = 0; i < facesArray.length; i++)
+//            Imgproc.rectangle(mRgba, facesArray[i].tl(), facesArray[i].br(), FACE_RECT_COLOR, 3);
 
         /*int faceFound =
         nativeDetect(mCascadeFile.getAbsolutePath(),
