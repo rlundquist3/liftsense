@@ -49,7 +49,7 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
     private float                  mRelativeFaceSize   = 0.2f;
     private int                    mAbsoluteFaceSize   = 0;
 
-    private CameraBridgeViewBase   mOpenCvCameraView;
+    private PortraitCameraView   mOpenCvCameraView;
 
     private BaseLoaderCallback  mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -109,7 +109,7 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
         setContentView(R.layout.activity_camera);
         //getActionBar().hide();
 
-        mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.camera_view);
+        mOpenCvCameraView = (PortraitCameraView) findViewById(R.id.camera_view);
         mOpenCvCameraView.setCvCameraViewListener(this);
 
         Intent intent = getIntent();
@@ -157,9 +157,9 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
         mRgba = inputFrame.rgba();
         //mGray = inputFrame.gray();
 
-        Mat mRgbaT = mRgba.t();
-        Core.flip(mRgba.t(), mRgbaT, 1);
-        Imgproc.resize(mRgbaT, mRgbaT, mRgba.size());
+//        Mat mRgbaT = mRgba.t();
+//        Core.flip(mRgba.t(), mRgbaT, 1);
+//        Imgproc.resize(mRgbaT, mRgbaT, mRgba.size());
 
         /**
          * Pass Mat to native environment
@@ -167,7 +167,7 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
          * Draw returned outlines on frame
          */
 
-        return mRgbaT;
+        return mRgba;
         
         /*if (mAbsoluteFaceSize == 0) {
             int height = mGray.rows();
