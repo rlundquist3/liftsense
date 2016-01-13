@@ -248,16 +248,16 @@ JNIEXPORT void JNICALL Java_com_rileylundquist_liftsense_JNIDetector_nativeDetec
     LOGD("Java_org_opencv_samples_facedetect_DetectionBasedTracker_nativeDetect END");
 }
 
-JNIEXPORT void JNICALL Java_com_rileylundquist_liftsense_JNIDetector_colorDetect
-        (JNIEnv *jenv, jclass, jlong thiz, jlong imageRgba, jlong oultines)
-{
-    /**
-     * call multipleObjectTracking
-     */
-    try {
-
-    }
-}
+//JNIEXPORT void JNICALL Java_com_rileylundquist_liftsense_JNIDetector_colorDetect
+//        (JNIEnv *jenv, jclass, jlong thiz, jlong imageRgba, jlong oultines)
+//{
+//    /**
+//     * call multipleObjectTracking
+//     */
+//    try {
+//
+//    }
+//}
 
 /*
  * Class:     com_rileylundquist_liftsense_MainActivity
