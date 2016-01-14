@@ -7,6 +7,7 @@
 
 #include <string>
 //#include <cv.h>
+#include <jni.h>
 #include <opencv2/core/core.hpp>
 #include <opencv2/objdetect.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
@@ -25,9 +26,7 @@ public:
 //    MultipleObjectTracking();
 //    ~MultipleObjectTracking();
 
-    void on_trackbar( int, void* );
     string intToString(int number);
-    void createTrackbars();
 
     void drawObject(vector<Object> theObjects, Mat &frame, Mat &temp, vector<vector<Point> > contours, vector<Vec4i> hierarchy);
     void drawObject(vector<Object> theObjects, Mat &frame);

@@ -54,44 +54,15 @@ int ratio = 3;
 int kernel_size = 3;
 char* window_name = "Edge Map";
 
-void MultipleObjectTracking::on_trackbar( int, void* )
-{//This function gets called whenever a
-	// trackbar position is changed
 
-}
-
-void MultipleObjectTracking::intToString(int number){
+string MultipleObjectTracking::intToString(int number){
 
 	std::stringstream ss;
 	ss << number;
 	return ss.str();
 }
 
-void MultipleObjectTracking::createTrackbars(){
-	//create window for trackbars
-	namedWindow(trackbarWindowName,0);
-	//create memory to store trackbar name on window
-	char TrackbarName[50];
-	sprintf( TrackbarName, "H_MIN", H_MIN);
-	sprintf( TrackbarName, "H_MAX", H_MAX);
-	sprintf( TrackbarName, "S_MIN", S_MIN);
-	sprintf( TrackbarName, "S_MAX", S_MAX);
-	sprintf( TrackbarName, "V_MIN", V_MIN);
-	sprintf( TrackbarName, "V_MAX", V_MAX);
-	//create trackbars and insert them into window
-	//3 parameters are: the address of the variable that is changing when the trackbar is moved(eg.H_LOW),
-	//the max value the trackbar can move (eg. H_HIGH),
-	//and the function that is called whenever the trackbar is moved(eg. on_trackbar)
-	//                                  ---->    ---->     ---->
-	createTrackbar( "H_MIN", trackbarWindowName, &H_MIN, H_MAX, on_trackbar );
-	createTrackbar( "H_MAX", trackbarWindowName, &H_MAX, H_MAX, on_trackbar );
-	createTrackbar( "S_MIN", trackbarWindowName, &S_MIN, S_MAX, on_trackbar );
-	createTrackbar( "S_MAX", trackbarWindowName, &S_MAX, S_MAX, on_trackbar );
-	createTrackbar( "V_MIN", trackbarWindowName, &V_MIN, V_MAX, on_trackbar );
-	createTrackbar( "V_MAX", trackbarWindowName, &V_MAX, V_MAX, on_trackbar );
-}
-
-void MultipleObjectTracking::drawObject(vector<Object> theObjects,Mat &frame, Mat &temp, vector<vector<Point>> contours, vector<Vec4i> hierarchy){
+void MultipleObjectTracking::drawObject(vector<Object> theObjects,Mat &frame, Mat &temp, vector<vector<Point> > contours, vector<Vec4i> hierarchy){
 
 	for(int i =0; i<theObjects.size(); i++){
 	cv::drawContours(frame,contours,i,theObjects.at(i).getColor(),3,8,hierarchy);
@@ -233,77 +204,66 @@ void MultipleObjectTracking::trackFilteredObject(Object theObject,Mat threshold,
 //int main(int argc, char* argv[])
 Mat MultipleObjectTracking::detect(jlong imageRgba)
 {
-	//if we would like to calibrate our filter values, set to true.
 	bool calibrationMode = false;
 
 	//Matrix to store each frame of the webcam feed
-	Mat cameraFeed = (Mat*)imageRgba;
+	Mat& cameraFeed = *(Mat*) imageRgba;
 	Mat threshold;
 	Mat HSV;
 
-	if(calibrationMode){
-		//create slider bars for HSV filtering
-		createTrackbars();
-	}
+	//convert frame from BGR to HSV colorspace
+	cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
 
-		src = cameraFeed;
+	if(calibrationMode==true){
 
-  		if( !src.data )
-			return -1;
+	//need to find the appropriate color range values
+	// calibrationMode must be false
 
-		//convert frame from BGR to HSV colorspace
+	//if in calibration mode, we track objects based on the HSV slider values.
 		cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
+		inRange(HSV,Scalar(H_MIN,S_MIN,V_MIN),Scalar(H_MAX,S_MAX,V_MAX),threshold);
+		morphOps(threshold);
+		imshow(windowName2,threshold);
 
-		if(calibrationMode==true){
+	//the folowing for canny edge detec
+		/// Create a matrix of the same type and size as src (for dst)
+		dst.create( src.size(), src.type() );
+		/// Convert the image to grayscale
+		cvtColor( src, src_gray, CV_BGR2GRAY );
+		/// Create a window
+		namedWindow( window_name, CV_WINDOW_AUTOSIZE );
+		/// Create a Trackbar for user to enter threshold
+		createTrackbar( "Min Threshold:", window_name, &lowThreshold, max_lowThreshold);
+		/// Show the image
+		trackFilteredObject(threshold,HSV,cameraFeed);
+	}
+	else{
+		//create some temp fruit objects so that
+		//we can use their member functions/information
+		Object blue("blue"), yellow("yellow"), red("red"), green("green");
 
-		//need to find the appropriate color range values
-		// calibrationMode must be false
+		//first find blue objects
+		cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
+		inRange(HSV,blue.getHSVmin(),blue.getHSVmax(),threshold);
+		morphOps(threshold);
+		trackFilteredObject(blue,threshold,HSV,cameraFeed);
+		//then yellows
+		cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
+		inRange(HSV,yellow.getHSVmin(),yellow.getHSVmax(),threshold);
+		morphOps(threshold);
+		trackFilteredObject(yellow,threshold,HSV,cameraFeed);
+		//then reds
+		cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
+		inRange(HSV,red.getHSVmin(),red.getHSVmax(),threshold);
+		morphOps(threshold);
+		trackFilteredObject(red,threshold,HSV,cameraFeed);
+		//then greens
+		cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
+		inRange(HSV,green.getHSVmin(),green.getHSVmax(),threshold);
+		morphOps(threshold);
+		trackFilteredObject(green,threshold,HSV,cameraFeed);
 
-		//if in calibration mode, we track objects based on the HSV slider values.
-			cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
-			inRange(HSV,Scalar(H_MIN,S_MIN,V_MIN),Scalar(H_MAX,S_MAX,V_MAX),threshold);
-			morphOps(threshold);
-			imshow(windowName2,threshold);
-
-		//the folowing for canny edge detec
-			/// Create a matrix of the same type and size as src (for dst)
-	  		dst.create( src.size(), src.type() );
-	  		/// Convert the image to grayscale
-	  		cvtColor( src, src_gray, CV_BGR2GRAY );
-	  		/// Create a window
-	  		namedWindow( window_name, CV_WINDOW_AUTOSIZE );
-	  		/// Create a Trackbar for user to enter threshold
-	  		createTrackbar( "Min Threshold:", window_name, &lowThreshold, max_lowThreshold);
-	  		/// Show the image
-			trackFilteredObject(threshold,HSV,cameraFeed);
-		}
-		else{
-			//create some temp fruit objects so that
-			//we can use their member functions/information
-			Object blue("blue"), yellow("yellow"), red("red"), green("green");
-
-			//first find blue objects
-			cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
-			inRange(HSV,blue.getHSVmin(),blue.getHSVmax(),threshold);
-			morphOps(threshold);
-			trackFilteredObject(blue,threshold,HSV,cameraFeed);
-			//then yellows
-			cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
-			inRange(HSV,yellow.getHSVmin(),yellow.getHSVmax(),threshold);
-			morphOps(threshold);
-			trackFilteredObject(yellow,threshold,HSV,cameraFeed);
-			//then reds
-			cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
-			inRange(HSV,red.getHSVmin(),red.getHSVmax(),threshold);
-			morphOps(threshold);
-			trackFilteredObject(red,threshold,HSV,cameraFeed);
-			//then greens
-			cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
-			inRange(HSV,green.getHSVmin(),green.getHSVmax(),threshold);
-			morphOps(threshold);
-			trackFilteredObject(green,threshold,HSV,cameraFeed);
-
-		}
+	}
 
 	return cameraFeed;
 }

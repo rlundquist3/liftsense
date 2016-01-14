@@ -1,4 +1,5 @@
 #include "com_rileylundquist_liftsense_MainActivity.h"
+#include <jni.h>
 #include <opencv2/core/core.hpp>
 #include <opencv2/objdetect.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
@@ -252,12 +253,9 @@ JNIEXPORT void JNICALL Java_com_rileylundquist_liftsense_JNIDetector_nativeDetec
 JNIEXPORT void JNICALL Java_com_rileylundquist_liftsense_JNIDetector_nativeColorDetect
         (JNIEnv *jenv, jclass, jlong thiz, jlong imageRgba, jlong oultines)
 {
-    /**
-     * call multipleObjectTracking
-     */
     try {
         MultipleObjectTracking tracker;
-        //tracker.detect(imageRgba);
+        tracker.detect(imageRgba);
     }
     catch(Exception& e) {
         LOGD("nativeColorDetect caught Exception: %s", e.what());
@@ -272,60 +270,3 @@ JNIEXPORT void JNICALL Java_com_rileylundquist_liftsense_JNIDetector_nativeColor
         jenv->ThrowNew(je, "Unknown exception in JNI code DetectionBasedTracker.nativeDetect()");
     }
 }
-
-/*
- * Class:     com_rileylundquist_liftsense_MainActivity
- * Method:    stringFromJNI
- * Signature: ()Ljava/lang/String;
- */
-/*JNIEXPORT jstring JNICALL Java_com_rileylundquist_liftsense_MainActivity_stringFromJNI
-  (JNIEnv * env, jobject obj) {
-    return env->NewStringUTF("Hello from JNI");
-  }*/
-
-/*JNIEXPORT void JNICALL Java_com_rileylundquist_liftsense_MainActivity_nativeDetect(JNIEnv* jenv, jobject, jstring jFileName, jlong addrRgba, jlong addrRetVal) {
-    const char* jnamestr = jenv->GetStringUTFChars(jFileName, NULL);
-    string stdFileName(jnamestr);
-
-    Mat& mRgba = *(Mat*)addrRgba;
-    Mat& retValMat = *(Mat*)addrRetVal;
-    Mat gray;
-    vector<Rect> faces;
-
-    jint retVal;
-    int faceFound=0;
-
-    mRgba.copyTo(retValMat);
-
-    cvtColor(mRgba, gray, CV_RGBA2GRAY);
-
-    CascadeClassifier face_cascade;
-    face_cascade.load(stdFileName);
-    LOGD("cascade loaded\n");
-
-    face_cascade.detectMultiScale(gray, faces, 2, 1,
-                CV_HAAR_FIND_BIGGEST_OBJECT |  CV_HAAR_SCALE_IMAGE,
-                Size(30, 30), Size(900, 900));
-    LOGD("detectMultiScale\n");
-
-    if (faces.size() > 0)
-    {
-        int index;
-        Rect face;
-        for(index=0; index<faces.size(); index++){
-            face = faces[index];
-            rectangle(retValMat, face, Scalar(255, 0, 0), 3);
-        }
-        faceFound = 1;
-        LOGD("face found\n");
-    }
-    else
-    {
-        LOGD("face not found\n");
-        faceFound = 0;
-    }
-
-    retVal = (jint)faceFound;
-
-    return retVal;
-}*/
