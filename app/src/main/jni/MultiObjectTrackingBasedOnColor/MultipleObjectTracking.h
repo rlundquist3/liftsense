@@ -6,8 +6,11 @@
 #define LIFTSENSE_MULTIPLEOBJECTTRACKING_H
 
 #include <string>
-#include <cv.h>
-#include <highgui.h>
+//#include <cv.h>
+#include <opencv2/core/core.hpp>
+#include <opencv2/objdetect.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
 #include <sstream>
 #include <iostream>
 #include <vector>
@@ -19,14 +22,14 @@ using namespace cv;
 
 class MultipleObjectTracking {
 public:
-    MultipleObjectTracking();
-    ~MultipleObjectTracking();
+//    MultipleObjectTracking();
+//    ~MultipleObjectTracking();
 
     void on_trackbar( int, void* );
     string intToString(int number);
     void createTrackbars();
 
-    void drawObject(vector<Object> theObjects, Mat &frame, Mat &temp, vector<vector<Point>> contours, vector<Vec4i> hierarchy);
+    void drawObject(vector<Object> theObjects, Mat &frame, Mat &temp, vector<vector<Point> > contours, vector<Vec4i> hierarchy);
     void drawObject(vector<Object> theObjects, Mat &frame);
 
     void morphOps(Mat &thresh);
@@ -34,7 +37,7 @@ public:
     void trackFilteredObject(Mat threshold,Mat HSV, Mat &cameraFeed);
     void trackFilteredObject(Object theObject,Mat threshold,Mat HSV, Mat &cameraFeed);
 
-    void detect(jlong imageRgba);
+    Mat detect(jlong imageRgba);
 
 private:
     int H_MIN = 0;

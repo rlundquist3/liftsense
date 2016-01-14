@@ -3,6 +3,7 @@
 #include <opencv2/objdetect.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <android/log.h>
+#include "MultiObjectTrackingBasedOnColor/MultipleObjectTracking.h"
 
 #define LOG_TAG "JNI_main"
 #define LOGD(...) ((void)__android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__))
@@ -248,16 +249,29 @@ JNIEXPORT void JNICALL Java_com_rileylundquist_liftsense_JNIDetector_nativeDetec
     LOGD("Java_org_opencv_samples_facedetect_DetectionBasedTracker_nativeDetect END");
 }
 
-//JNIEXPORT void JNICALL Java_com_rileylundquist_liftsense_JNIDetector_colorDetect
-//        (JNIEnv *jenv, jclass, jlong thiz, jlong imageRgba, jlong oultines)
-//{
-//    /**
-//     * call multipleObjectTracking
-//     */
-//    try {
-//
-//    }
-//}
+JNIEXPORT void JNICALL Java_com_rileylundquist_liftsense_JNIDetector_nativeColorDetect
+        (JNIEnv *jenv, jclass, jlong thiz, jlong imageRgba, jlong oultines)
+{
+    /**
+     * call multipleObjectTracking
+     */
+    try {
+        MultipleObjectTracking tracker;
+        tracker.detect(imageRgba);
+    }
+    catch(Exception& e) {
+        LOGD("nativeColorDetect caught Exception: %s", e.what());
+        jclass je = jenv->FindClass("org/opencv/core/CvException");
+        if(!je)
+        je = jenv->FindClass("java/lang/Exception");
+        jenv->ThrowNew(je, e.what());
+    }
+    catch (...) {
+        LOGD("nativeColorDetect caught unknown exception");
+        jclass je = jenv->FindClass("java/lang/Exception");
+        jenv->ThrowNew(je, "Unknown exception in JNI code DetectionBasedTracker.nativeDetect()");
+    }
+}
 
 /*
  * Class:     com_rileylundquist_liftsense_MainActivity

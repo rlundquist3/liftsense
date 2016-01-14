@@ -54,20 +54,20 @@ int ratio = 3;
 int kernel_size = 3;
 char* window_name = "Edge Map";
 
-void on_trackbar( int, void* )
+void MultipleObjectTracking::on_trackbar( int, void* )
 {//This function gets called whenever a
 	// trackbar position is changed
 
 }
 
-string intToString(int number){
+void MultipleObjectTracking::intToString(int number){
 
 	std::stringstream ss;
 	ss << number;
 	return ss.str();
 }
 
-void createTrackbars(){
+void MultipleObjectTracking::createTrackbars(){
 	//create window for trackbars
 	namedWindow(trackbarWindowName,0);
 	//create memory to store trackbar name on window
@@ -91,7 +91,7 @@ void createTrackbars(){
 	createTrackbar( "V_MAX", trackbarWindowName, &V_MAX, V_MAX, on_trackbar );
 }
 
-void drawObject(vector<Object> theObjects,Mat &frame, Mat &temp, vector<vector<Point>> contours, vector<Vec4i> hierarchy){
+void MultipleObjectTracking::drawObject(vector<Object> theObjects,Mat &frame, Mat &temp, vector<vector<Point>> contours, vector<Vec4i> hierarchy){
 
 	for(int i =0; i<theObjects.size(); i++){
 	cv::drawContours(frame,contours,i,theObjects.at(i).getColor(),3,8,hierarchy);
@@ -101,7 +101,7 @@ void drawObject(vector<Object> theObjects,Mat &frame, Mat &temp, vector<vector<P
 	}
 }
 
-void drawObject(vector<Object> theObjects,Mat &frame){
+void MultipleObjectTracking::drawObject(vector<Object> theObjects,Mat &frame){
 
 	for(int i =0; i<theObjects.size(); i++){
 
@@ -111,7 +111,7 @@ void drawObject(vector<Object> theObjects,Mat &frame){
 	}
 }
 
-void morphOps(Mat &thresh){
+void MultipleObjectTracking::morphOps(Mat &thresh){
 
 	//create structuring element that will be used to "dilate" and "erode" image.
 	//the element chosen here is a 3px by 3px rectangle
@@ -125,7 +125,8 @@ void morphOps(Mat &thresh){
 	dilate(thresh,thresh,dilateElement);
 	dilate(thresh,thresh,dilateElement);
 }
-void trackFilteredObject(Mat threshold,Mat HSV, Mat &cameraFeed)
+
+void MultipleObjectTracking::trackFilteredObject(Mat threshold,Mat HSV, Mat &cameraFeed)
 {
 	vector <Object> objects;
 	Mat temp;
@@ -176,7 +177,7 @@ void trackFilteredObject(Mat threshold,Mat HSV, Mat &cameraFeed)
 	}
 }
 
-void trackFilteredObject(Object theObject,Mat threshold,Mat HSV, Mat &cameraFeed){
+void MultipleObjectTracking::trackFilteredObject(Object theObject,Mat threshold,Mat HSV, Mat &cameraFeed){
 
 	vector <Object> objects;
 	Mat temp;
@@ -228,15 +229,12 @@ void trackFilteredObject(Object theObject,Mat threshold,Mat HSV, Mat &cameraFeed
 
 /**
  * Formerly main--changed to be function called by main.cpp
- *
- * Where tracking methods call drawObject,
- * values need to be passed so this can instead be done in CameraActivity
  */
 //int main(int argc, char* argv[])
-void detect(jlong imageRgba)
+Mat MultipleObjectTracking::detect(jlong imageRgba)
 {
 	//if we would like to calibrate our filter values, set to true.
-	bool calibrationMode = true;
+	bool calibrationMode = false;
 
 	//Matrix to store each frame of the webcam feed
 	Mat cameraFeed = (Mat*)imageRgba;
@@ -247,23 +245,6 @@ void detect(jlong imageRgba)
 		//create slider bars for HSV filtering
 		createTrackbars();
 	}
-
-	/*
-	//video capture object to acquire webcam feed
-	VideoCapture capture;
-	//open capture object at location zero (default location for webcam)
-	capture.open(0);
-	//set height and width of capture frame
-	capture.set(CV_CAP_PROP_FRAME_WIDTH,FRAME_WIDTH);
-	capture.set(CV_CAP_PROP_FRAME_HEIGHT,FRAME_HEIGHT);
-	 */
-
-	//start an infinite loop where webcam feed is copied to cameraFeed matrix
-	//all of our operations will be performed within this loop
-	waitKey(1000);
-	while(1){
-		//store image to matrix
-		//capture.read(cameraFeed);
 
 		src = cameraFeed;
 
@@ -323,15 +304,6 @@ void detect(jlong imageRgba)
 			trackFilteredObject(green,threshold,HSV,cameraFeed);
 
 		}
-		//show frames
-		//imshow(windowName2,threshold);
 
-		imshow(windowName,cameraFeed);
-		//imshow(windowName1,HSV);
-
-		//delay 30ms so that screen can refresh.
-		//image will not appear without this waitKey() command
-		waitKey(30);
-	}
-	return 0;
+	return cameraFeed;
 }
