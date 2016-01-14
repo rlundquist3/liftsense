@@ -1,8 +1,6 @@
 package com.rileylundquist.liftsense;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -17,9 +15,6 @@ import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
 
 public class CameraActivity extends Activity implements CvCameraViewListener2 {

@@ -257,7 +257,7 @@ JNIEXPORT void JNICALL Java_com_rileylundquist_liftsense_JNIDetector_nativeColor
      */
     try {
         MultipleObjectTracking tracker;
-        tracker.detect(imageRgba);
+        //tracker.detect(imageRgba);
     }
     catch(Exception& e) {
         LOGD("nativeColorDetect caught Exception: %s", e.what());
