@@ -36,7 +36,7 @@ public:
     void trackFilteredObject(Mat threshold,Mat HSV, Mat &cameraFeed);
     void trackFilteredObject(Object theObject,Mat threshold,Mat HSV, Mat &cameraFeed);
 
-    Mat detect(jlong imageRgba);
+    void detect(jlong imageRgba);
 
 private:
     int H_MIN = 0;

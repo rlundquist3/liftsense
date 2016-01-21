@@ -20,11 +20,9 @@ import java.io.File;
 public class CameraActivity extends Activity implements CvCameraViewListener2 {
 
     private static final String    TAG                 = "Camera Fragment";
-    private static final Scalar    FACE_RECT_COLOR     = new Scalar(0, 255, 0, 255);
 
     private Mat                    mRgba;
     private Mat                    mGray;
-    private File                   mCascadeFile;
     private JNIDetector            mNativeDetector;
 
     private PortraitCameraView   mOpenCvCameraView;
@@ -40,6 +38,7 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
                     // Load native library after OpenCV initialization
                     System.loadLibrary("liftSenseCV");
 
+                    //mNativeDetector = new JNIDetector();
                     mOpenCvCameraView.enableView();
                 } break;
                 default:
@@ -54,7 +53,6 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
-        //getActionBar().hide();
 
         mOpenCvCameraView = (PortraitCameraView) findViewById(R.id.camera_view);
         mOpenCvCameraView.setCvCameraViewListener(this);
@@ -103,10 +101,12 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
          * Return outlines from native
          * Draw returned outlines on frame
          */
-        Mat result = new Mat();
-        mNativeDetector.colorDetect(mRgba, result);
+        //Mat result = new Mat();
+        //mNativeDetector.colorDetect(mRgba, result);
 
-        mRgba = result;
+        //mRgba = result;
+
+        nativeColorDetect(mRgba.getNativeObjAddr());
 
         return mRgba;
     }
@@ -126,4 +126,6 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private native void nativeColorDetect(long inputImage);
 }

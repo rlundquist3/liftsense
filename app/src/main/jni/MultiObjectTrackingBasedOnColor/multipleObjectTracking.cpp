@@ -202,7 +202,7 @@ void MultipleObjectTracking::trackFilteredObject(Object theObject,Mat threshold,
  * Formerly main--changed to be function called by main.cpp
  */
 //int main(int argc, char* argv[])
-Mat MultipleObjectTracking::detect(jlong imageRgba)
+void MultipleObjectTracking::detect(jlong imageRgba)
 {
 	bool calibrationMode = false;
 
@@ -265,5 +265,5 @@ Mat MultipleObjectTracking::detect(jlong imageRgba)
 
 	}
 
-	return cameraFeed;
+	return;
 }
