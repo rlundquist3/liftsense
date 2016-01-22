@@ -37,9 +37,10 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
 
                     // Load native library after OpenCV initialization
                     System.loadLibrary("liftSenseCV");
+                    Log.i(TAG, "post load library");
 
                     //mNativeDetector = new JNIDetector();
-                    mOpenCvCameraView.enableView();
+//                    mOpenCvCameraView.enableView();
                 } break;
                 default:
                 {
@@ -56,6 +57,7 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
 
         mOpenCvCameraView = (PortraitCameraView) findViewById(R.id.camera_view);
         mOpenCvCameraView.setCvCameraViewListener(this);
+        mOpenCvCameraView.enableView();
     }
 
     @Override
