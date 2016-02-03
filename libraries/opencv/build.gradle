@@ -17,8 +17,8 @@ model {
     defaultConfig.with {
       minSdkVersion.apiLevel 8
       targetSdkVersion.apiLevel 19
-      versionCode 2490
-      versionName "2.4.9"
+      versionCode 2411
+      versionName "2.4.11"
     }
 
     buildTypes {

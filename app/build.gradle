@@ -3,10 +3,16 @@ apply plugin: 'com.android.model.application'
 model {
     android {
         compileSdkVersion 23
-        buildToolsVersion "23.0.1"
+        buildToolsVersion "23.0.2"
 
         ndk {
             moduleName "liftSenseCV"
+
+            cppFlags.add("-std=c++11") // Add provisions to allow C++11 functionality
+            cppFlags.add("-fexceptions")
+            cppFlags.add("-I${file("/mnt/DATA/Documents/Web_Development/Libraries/OpenCV-android-sdk/sdk/native/jni/include")}".toString())
+            ldLibs.addAll(["android", "EGL", "GLESv2", "dl", "log", "z"])
+            stl = "gnustl_shared"
         }
 
         defaultConfig {
@@ -47,5 +53,5 @@ model {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':libraries:opencv')
-    compile 'com.android.support:support-v4:23.0.0'
+    compile 'com.android.support:support-v4:23.1.1'
 }
