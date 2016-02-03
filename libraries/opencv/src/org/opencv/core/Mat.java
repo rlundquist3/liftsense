@@ -43,6 +43,7 @@ public class Mat {
     // C++: Mat::Mat(Size size, int type)
     //
 
+
     // javadoc: Mat::Mat(size, type)
     public Mat(Size size, int type)
     {
