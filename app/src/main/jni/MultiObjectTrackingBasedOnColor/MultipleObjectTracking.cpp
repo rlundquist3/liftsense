@@ -209,10 +209,10 @@ void MultipleObjectTracking::detect(jlong imageRgba)
 	//Matrix to store each frame of the webcam feed
 	Mat& cameraFeed = *(Mat*) imageRgba;
 	Mat threshold;
-	Mat HSV;
+	Mat hsv;
 
 	//convert frame from BGR to HSV colorspace
-	cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
+	cvtColor(cameraFeed, hsv, COLOR_BGR2HSV);
 
 	if(calibrationMode==true){
 
@@ -220,8 +220,8 @@ void MultipleObjectTracking::detect(jlong imageRgba)
 	// calibrationMode must be false
 
 	//if in calibration mode, we track objects based on the HSV slider values.
-		cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
-		inRange(HSV,Scalar(H_MIN,S_MIN,V_MIN),Scalar(H_MAX,S_MAX,V_MAX),threshold);
+		cvtColor(cameraFeed,hsv,COLOR_BGR2HSV);
+		inRange(hsv,Scalar(H_MIN,S_MIN,V_MIN),Scalar(H_MAX,S_MAX,V_MAX),threshold);
 		morphOps(threshold);
 		imshow(windowName2,threshold);
 
@@ -235,34 +235,20 @@ void MultipleObjectTracking::detect(jlong imageRgba)
 		/// Create a Trackbar for user to enter threshold
 		createTrackbar( "Min Threshold:", window_name, &lowThreshold, max_lowThreshold);
 		/// Show the image
-		trackFilteredObject(threshold,HSV,cameraFeed);
+		trackFilteredObject(threshold,hsv,cameraFeed);
 	}
 	else{
-		//create some temp fruit objects so that
-		//we can use their member functions/information
-		Object blue("blue"), yellow("blue?"), red("red"), green("green");
+		vector<Object> colors;
+		colors.push_back(Object("blue"));
+		colors.push_back(Object("blue2"));
+		colors.push_back(Object("red"));
+		colors.push_back(Object("green"));
 
-		//first find blue objects
-		//cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
-		inRange(HSV,blue.getHSVmin(),blue.getHSVmax(),threshold);
-		morphOps(threshold);
-		trackFilteredObject(blue,threshold,HSV,cameraFeed);
-		//then yellows
-		//cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
-		inRange(HSV,yellow.getHSVmin(),yellow.getHSVmax(),threshold);
-		morphOps(threshold);
-		trackFilteredObject(yellow,threshold,HSV,cameraFeed);
-		//then reds
-		//cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
-		inRange(HSV,red.getHSVmin(),red.getHSVmax(),threshold);
-		morphOps(threshold);
-		trackFilteredObject(red,threshold,HSV,cameraFeed);
-		//then greens
-		//cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
-		inRange(HSV,green.getHSVmin(),green.getHSVmax(),threshold);
-		morphOps(threshold);
-		trackFilteredObject(green,threshold,HSV,cameraFeed);
-
+		for (int i=0; i<colors.size(); i++) {
+			inRange(hsv, colors[i].getHSVmin(), colors[i].getHSVmax(), threshold);
+			morphOps(threshold);
+			trackFilteredObject(colors[i], threshold, hsv, cameraFeed);
+		}
 	}
 
 	return;

@@ -34,7 +34,7 @@ Object::Object(string name){
 		setColor(Scalar(0,255,0));
 
 	}
-	if(name=="blue?"){
+	if(name=="blue2"){
 
 		//TODO: use "calibration mode" to find HSV min
 		//and HSV max values
