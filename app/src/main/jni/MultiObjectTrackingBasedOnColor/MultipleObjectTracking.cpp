@@ -240,25 +240,25 @@ void MultipleObjectTracking::detect(jlong imageRgba)
 	else{
 		//create some temp fruit objects so that
 		//we can use their member functions/information
-		Object blue("blue"), yellow("yellow"), red("red"), green("green");
+		Object blue("blue"), yellow("blue?"), red("red"), green("green");
 
 		//first find blue objects
-		cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
+		//cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
 		inRange(HSV,blue.getHSVmin(),blue.getHSVmax(),threshold);
 		morphOps(threshold);
 		trackFilteredObject(blue,threshold,HSV,cameraFeed);
 		//then yellows
-		cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
+		//cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
 		inRange(HSV,yellow.getHSVmin(),yellow.getHSVmax(),threshold);
 		morphOps(threshold);
 		trackFilteredObject(yellow,threshold,HSV,cameraFeed);
 		//then reds
-		cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
+		//cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
 		inRange(HSV,red.getHSVmin(),red.getHSVmax(),threshold);
 		morphOps(threshold);
 		trackFilteredObject(red,threshold,HSV,cameraFeed);
 		//then greens
-		cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
+		//cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
 		inRange(HSV,green.getHSVmin(),green.getHSVmax(),threshold);
 		morphOps(threshold);
 		trackFilteredObject(green,threshold,HSV,cameraFeed);
