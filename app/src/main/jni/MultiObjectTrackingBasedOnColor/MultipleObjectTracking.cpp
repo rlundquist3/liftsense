@@ -20,49 +20,14 @@
 
 #include "MultipleObjectTracking.h"
 
-
-//initial min and max HSV filter values.
-//these will be changed using trackbars
-int H_MIN = 0;
-int H_MAX = 256;
-int S_MIN = 0;
-int S_MAX = 256;
-int V_MIN = 0;
-int V_MAX = 256;
-//default capture width and height
-const int FRAME_WIDTH = 640;
-const int FRAME_HEIGHT = 480;
-//max number of objects to be detected in frame
-const int MAX_NUM_OBJECTS=50;
-//minimum and maximum object area
-const int MIN_OBJECT_AREA = 20*20;
-const int MAX_OBJECT_AREA = FRAME_HEIGHT*FRAME_WIDTH/1.5;
-//names that will appear at the top of each window
-const string windowName = "Original Image";
-const string windowName1 = "HSV Image";
-const string windowName2 = "Thresholded Image";
-const string windowName3 = "After Morphological Operations";
-const string trackbarWindowName = "Trackbars";
-
-//The following for canny edge detec
-Mat dst, detected_edges;
-Mat src, src_gray;
-int edgeThresh = 1;
-int lowThreshold;
-int const max_lowThreshold = 100;
-int ratio = 3;
-int kernel_size = 3;
-char* window_name = "Edge Map";
-
-
-string MultipleObjectTracking::intToString(int number){
+string MultipleObjectTracking::intToString(int number) {
 
 	std::stringstream ss;
 	ss << number;
 	return ss.str();
 }
 
-void MultipleObjectTracking::drawObject(vector<Object> theObjects,Mat &frame, Mat &temp, vector<vector<Point> > contours, vector<Vec4i> hierarchy){
+void MultipleObjectTracking::drawObject(vector<Object> theObjects,Mat &frame, Mat &temp, vector<vector<Point> > contours, vector<Vec4i> hierarchy) {
 
 	for(int i =0; i<theObjects.size(); i++){
 	cv::drawContours(frame,contours,i,theObjects.at(i).getColor(),3,8,hierarchy);
@@ -72,7 +37,7 @@ void MultipleObjectTracking::drawObject(vector<Object> theObjects,Mat &frame, Ma
 	}
 }
 
-void MultipleObjectTracking::drawObject(vector<Object> theObjects,Mat &frame){
+void MultipleObjectTracking::drawObject(vector<Object> theObjects,Mat &frame) {
 
 	for(int i =0; i<theObjects.size(); i++){
 
@@ -82,7 +47,7 @@ void MultipleObjectTracking::drawObject(vector<Object> theObjects,Mat &frame){
 	}
 }
 
-void MultipleObjectTracking::morphOps(Mat &thresh){
+void MultipleObjectTracking::morphOps(Mat &thresh) {
 
 	//create structuring element that will be used to "dilate" and "erode" image.
 	//the element chosen here is a 3px by 3px rectangle
@@ -97,8 +62,7 @@ void MultipleObjectTracking::morphOps(Mat &thresh){
 	dilate(thresh,thresh,dilateElement);
 }
 
-void MultipleObjectTracking::trackFilteredObject(Mat threshold,Mat HSV, Mat &cameraFeed)
-{
+void MultipleObjectTracking::trackFilteredObject(Mat threshold,Mat HSV, Mat &cameraFeed) {
 	vector <Object> objects;
 	Mat temp;
 	threshold.copyTo(temp);
@@ -123,8 +87,7 @@ void MultipleObjectTracking::trackFilteredObject(Mat threshold,Mat HSV, Mat &cam
 				//if the area is the same as the 3/2 of the image size, probably just a bad filter
 				//we only want the object with the largest area so we safe a reference area each
 				//iteration and compare it to the area in the next iteration.
-				if(area>MIN_OBJECT_AREA)
-				{
+				if(area>MIN_OBJECT_AREA) {
 					Object object;
 
 					object.setXPos(moment.m10/area);
@@ -148,7 +111,7 @@ void MultipleObjectTracking::trackFilteredObject(Mat threshold,Mat HSV, Mat &cam
 	}
 }
 
-void MultipleObjectTracking::trackFilteredObject(Object theObject,Mat threshold,Mat HSV, Mat &cameraFeed){
+void MultipleObjectTracking::trackFilteredObject(Object theObject,Mat threshold,Mat HSV, Mat &cameraFeed) {
 
 	vector <Object> objects;
 	Mat temp;
@@ -157,14 +120,14 @@ void MultipleObjectTracking::trackFilteredObject(Object theObject,Mat threshold,
 	vector< vector<Point> > contours;
 	vector<Vec4i> hierarchy;
 	//find contours of filtered image using openCV findContours function
-	findContours(temp,contours,hierarchy,CV_RETR_CCOMP,CV_CHAIN_APPROX_SIMPLE );
+	findContours(temp, contours, hierarchy, CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE );
 	//use moments method to find our filtered object
 	double refArea = 0;
 	bool objectFound = false;
 	if (hierarchy.size() > 0) {
 		int numObjects = hierarchy.size();
 		//if number of objects greater than MAX_NUM_OBJECTS we have a noisy filter
-		if(numObjects<MAX_NUM_OBJECTS){
+		if(numObjects<MAX_NUM_OBJECTS) {
 			for (int index = 0; index >= 0; index = hierarchy[index][0]) {
 
 				Moments moment = moments((cv::Mat)contours[index]);
@@ -194,7 +157,8 @@ void MultipleObjectTracking::trackFilteredObject(Object theObject,Mat threshold,
 				//draw object location on screen
 				drawObject(objects,cameraFeed,temp,contours,hierarchy);}
 
-		}else putText(cameraFeed,"TOO MUCH NOISE! ADJUST FILTER",Point(0,50),1,2,Scalar(0,0,255),2);
+		} else
+			putText(cameraFeed,"TOO MUCH NOISE! ADJUST FILTER",Point(0,50),1,2,Scalar(0,0,255),2);
 	}
 }
 
@@ -202,8 +166,7 @@ void MultipleObjectTracking::trackFilteredObject(Object theObject,Mat threshold,
  * Formerly main--changed to be function called by main.cpp
  */
 //int main(int argc, char* argv[])
-void MultipleObjectTracking::detect(jlong imageRgba)
-{
+void MultipleObjectTracking::detect(jlong imageRgba) {
 	bool calibrationMode = false;
 
 	//Matrix to store each frame of the webcam feed
@@ -237,7 +200,7 @@ void MultipleObjectTracking::detect(jlong imageRgba)
 		/// Show the image
 		trackFilteredObject(threshold,hsv,cameraFeed);
 	}
-	else{
+	else {
 		vector<Object> colors;
 		colors.push_back(Object("blue"));
 		colors.push_back(Object("blue2"));
