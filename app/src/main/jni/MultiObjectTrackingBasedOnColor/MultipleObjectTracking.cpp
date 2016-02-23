@@ -159,7 +159,64 @@ void MultipleObjectTracking::trackFilteredObject(Object theObject,Mat threshold,
  * Formerly main--changed to be function called by main.cpp
  */
 //int main(int argc, char* argv[])
-void MultipleObjectTracking::detect(jlong imageRgba) {
+//void MultipleObjectTracking::detect(jlong imageRgba) {
+//	bool calibrationMode = false;
+//
+//	//Matrix to store each frame of the webcam feed
+//	Mat& cameraFeed = *(Mat*) imageRgba;
+//	Mat threshold;
+//	Mat hsv;
+//
+//	//convert frame from BGR to HSV colorspace
+//	cvtColor(cameraFeed, hsv, COLOR_BGR2HSV);
+//
+//	//TODO: this will be removed--keep for reference now
+//	if(calibrationMode==true){
+//
+//	//need to find the appropriate color range values
+//	// calibrationMode must be false
+//
+//	//if in calibration mode, we track objects based on the HSV slider values.
+//		cvtColor(cameraFeed,hsv,COLOR_BGR2HSV);
+//		inRange(hsv,Scalar(H_MIN,S_MIN,V_MIN),Scalar(H_MAX,S_MAX,V_MAX),threshold);
+//		morphOps(threshold);
+//		imshow(windowName2,threshold);
+//
+//	//the folowing for canny edge detec
+//		/// Create a matrix of the same type and size as src (for dst)
+//		dst.create( src.size(), src.type() );
+//		/// Convert the image to grayscale
+//		cvtColor( src, src_gray, CV_BGR2GRAY );
+//		/// Create a window
+//		namedWindow( window_name, CV_WINDOW_AUTOSIZE );
+//		/// Create a Trackbar for user to enter threshold
+//		createTrackbar( "Min Threshold:", window_name, &lowThreshold, max_lowThreshold);
+//		/// Show the image
+//		trackFilteredObject(threshold,hsv,cameraFeed);
+//	}
+//	else {
+//		vector<Object> colors;
+//		colors.push_back(Object("blue"));
+//		colors.push_back(Object("yellow"));
+//		colors.push_back(Object("green"));
+//
+//		for (int i=0; i<colors.size(); i++) {
+//			inRange(hsv, colors[i].getHSVmin(), colors[i].getHSVmax(), threshold);
+////			inRange(imageRgba, colors[i].getHSVmin(), colors[i].getHSVmax(), threshold);
+//			morphOps(threshold);
+////			cvtColor(cameraFeed, hsv, COLOR_BGR2HSV);
+//			trackFilteredObject(colors[i], threshold, hsv, cameraFeed);
+//		}
+//	}
+//
+//	return;
+//}
+
+/**
+ * Formerly main--changed to be function called by main.cpp
+ */
+//int main(int argc, char* argv[])
+void MultipleObjectTracking::detect(jlong imageRgba, jint h1, jint h2, jint s1, jint s2, jint v1, jint v2) {
 	bool calibrationMode = false;
 
 	//Matrix to store each frame of the webcam feed
@@ -199,6 +256,7 @@ void MultipleObjectTracking::detect(jlong imageRgba) {
 		colors.push_back(Object("blue"));
 		colors.push_back(Object("yellow"));
 		colors.push_back(Object("green"));
+		colors.push_back(Object(h1, h2, s1, s2, v1, v2));
 
 		for (int i=0; i<colors.size(); i++) {
 			inRange(hsv, colors[i].getHSVmin(), colors[i].getHSVmax(), threshold);

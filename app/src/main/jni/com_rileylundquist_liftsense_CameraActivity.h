@@ -15,6 +15,9 @@ extern "C" {
 JNIEXPORT void JNICALL Java_com_rileylundquist_liftsense_CameraActivity_nativeColorDetect
   (JNIEnv *, jobject, jlong);
 
+JNIEXPORT void JNICALL Java_com_rileylundquist_liftsense_CameraActivity_nativeColorDetect2
+(JNIEnv *, jobject, jlong, jint, jint, jint, jint, jint, jint);
+
 #ifdef __cplusplus
 }
 #endif

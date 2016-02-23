@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
@@ -108,7 +109,22 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
 
         //mRgba = result;
 
-        nativeColorDetect(mRgba.getNativeObjAddr());
+        EditText h1e = (EditText) findViewById(R.id.editTextH);
+        EditText h2e = (EditText) findViewById(R.id.editTextH2);
+        EditText s1e = (EditText) findViewById(R.id.editTextS);
+        EditText s2e = (EditText) findViewById(R.id.editTextS2);
+        EditText v1e = (EditText) findViewById(R.id.editTextV);
+        EditText v2e = (EditText) findViewById(R.id.editTextV2);
+        int h1 = Integer.parseInt(h1e.getText().toString());
+        int h2 = Integer.parseInt(h2e.getText().toString());
+        int s1 = Integer.parseInt(s1e.getText().toString());
+        int s2 = Integer.parseInt(s2e.getText().toString());
+        int v1 = Integer.parseInt(v1e.getText().toString());
+        int v2 = Integer.parseInt(v2e.getText().toString());
+
+        nativeColorDetect2(mRgba.getNativeObjAddr(), h1, h2, s1, s2, v1, v2);
+
+//        nativeColorDetect(mRgba.getNativeObjAddr());
 
         return mRgba;
     }
@@ -129,5 +145,6 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
         return super.onOptionsItemSelected(item);
     }
 
-    private native void nativeColorDetect(long inputImage);
+//    private native void nativeColorDetect(long inputImage);
+    private native void nativeColorDetect2(long inputImage, int h1, int h2, int s1, int s2, int v1, int v2);
 }

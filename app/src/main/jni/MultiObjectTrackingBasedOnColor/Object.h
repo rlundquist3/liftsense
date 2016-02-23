@@ -12,6 +12,7 @@ public:
 	~Object(void);
 
 	Object(string name);
+	Object(int h1, int h2, int s1, int s2, int v1, int v2);
 
 	int getXPos();
 	void setXPos(int x);
