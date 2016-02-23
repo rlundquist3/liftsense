@@ -11,18 +11,7 @@ Object::Object()
 Object::Object(string name){
 
 	setType(name);
-	
-	if(name=="red"){
 
-		//TODO: use "calibration mode" to find HSV min
-		//and HSV max values
-
-		setHSVmin(Scalar(92,0,0));
-		setHSVmax(Scalar(124,256,256));
-
-		setColor(Scalar(255,0,0));
-
-	}
 	if(name=="green"){
 
 		//TODO: use "calibration mode" to find HSV min
@@ -34,28 +23,52 @@ Object::Object(string name){
 		setColor(Scalar(0,255,0));
 
 	}
-	if(name=="blue2"){
+	else if(name=="blue"){
 
 		//TODO: use "calibration mode" to find HSV min
 		//and HSV max values
 
-		setHSVmin(Scalar(20,124,123));
-		setHSVmax(Scalar(30,256,256));
-
-		setColor(Scalar(0,255,255));
-
-	}
-	if(name=="blue"){
-
-		//TODO: use "calibration mode" to find HSV min
-		//and HSV max values
-
-		setHSVmin(Scalar(0,200,0));
-		setHSVmax(Scalar(19,255,255));
+		setHSVmin(Scalar(102, 97, 89));
+		setHSVmax(Scalar(125,255,255));
 
 		setColor(Scalar(0,0,255));
 
 	}
+	else if(name=="yellow"){
+
+		//TODO: use "calibration mode" to find HSV min
+		//and HSV max values
+
+		setHSVmin(Scalar(20, 100, 100));
+		setHSVmax(Scalar(34,255,255));
+
+		setColor(Scalar(255,255,0));
+
+	}
+//	if(name=="red"){
+//
+//		//TODO: use "calibration mode" to find HSV min
+//		//and HSV max values
+//
+//		setHSVmin(Scalar(92,0,0));
+//		setHSVmax(Scalar(124,256,256));
+//
+//		setColor(Scalar(255,0,0));
+//
+//	}
+
+//	if(name=="blue2"){
+//
+//		//TODO: use "calibration mode" to find HSV min
+//		//and HSV max values
+//
+//		setHSVmin(Scalar(20,124,123));
+//		setHSVmax(Scalar(30,256,256));
+//
+//		setColor(Scalar(0,255,255));
+//
+//	}
+
 }
 
 Object::~Object(void)

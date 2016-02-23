@@ -11,13 +11,6 @@
 //LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 //IN THE SOFTWARE.
 
-/*#include <sstream>
-#include <string>
-#include <iostream>
-#include <vector>
-
-#include "Object.h"*/
-
 #include "MultipleObjectTracking.h"
 
 string MultipleObjectTracking::intToString(int number) {
@@ -177,6 +170,7 @@ void MultipleObjectTracking::detect(jlong imageRgba) {
 	//convert frame from BGR to HSV colorspace
 	cvtColor(cameraFeed, hsv, COLOR_BGR2HSV);
 
+	//TODO: this will be removed--keep for reference now
 	if(calibrationMode==true){
 
 	//need to find the appropriate color range values
@@ -203,13 +197,14 @@ void MultipleObjectTracking::detect(jlong imageRgba) {
 	else {
 		vector<Object> colors;
 		colors.push_back(Object("blue"));
-		colors.push_back(Object("blue2"));
-		colors.push_back(Object("red"));
+		colors.push_back(Object("yellow"));
 		colors.push_back(Object("green"));
 
 		for (int i=0; i<colors.size(); i++) {
 			inRange(hsv, colors[i].getHSVmin(), colors[i].getHSVmax(), threshold);
+//			inRange(imageRgba, colors[i].getHSVmin(), colors[i].getHSVmax(), threshold);
 			morphOps(threshold);
+//			cvtColor(cameraFeed, hsv, COLOR_BGR2HSV);
 			trackFilteredObject(colors[i], threshold, hsv, cameraFeed);
 		}
 	}
