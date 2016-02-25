@@ -25,8 +25,8 @@ Object::Object(string name){
 		//TODO: use "calibration mode" to find HSV min
 		//and HSV max values
 
-		setHSVmin(Scalar(34,50,50));
-		setHSVmax(Scalar(80,220,200));
+		setHSVmin(Scalar(22,10,10));
+		setHSVmax(Scalar(80,255,255));
 
 		setColor(Scalar(0,255,0));
 
@@ -36,8 +36,8 @@ Object::Object(string name){
 		//TODO: use "calibration mode" to find HSV min
 		//and HSV max values
 
-		setHSVmin(Scalar(100, 150, 0));
-		setHSVmax(Scalar(140,255,255));
+		setHSVmin(Scalar(0, 50, 50));
+		setHSVmax(Scalar(20,255,255));
 
 		setColor(Scalar(0,0,255));
 
@@ -47,8 +47,8 @@ Object::Object(string name){
 		//TODO: use "calibration mode" to find HSV min
 		//and HSV max values
 
-		setHSVmin(Scalar(14, 135, 139));
-		setHSVmax(Scalar(30,255,255));
+		setHSVmin(Scalar(83, 50, 50));
+		setHSVmax(Scalar(90,255,255));
 
 		setColor(Scalar(255,255,0));
 
