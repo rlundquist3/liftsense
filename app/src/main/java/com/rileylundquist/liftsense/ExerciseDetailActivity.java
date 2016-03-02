@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
 /**
  * An activity representing a single Exercise detail screen. This
@@ -71,6 +72,18 @@ public class ExerciseDetailActivity extends Activity {
     public void goToCamera(View view) {
         Intent intent = new Intent(this, CameraActivity.class);
         //intent.putExtra(EXTRA_EXERCISE, mItem.content);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                EditText weightField = (EditText) findViewById(R.id.weight_field);
+                weightField.setText(Float.toString(data.getFloatExtra("result", 4)));
+            }
+            if (resultCode == Activity.RESULT_CANCELED)
+                ;
+        }
     }
 }

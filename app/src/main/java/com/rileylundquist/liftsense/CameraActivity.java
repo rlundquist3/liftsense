@@ -1,11 +1,15 @@
 package com.rileylundquist.liftsense;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
@@ -20,13 +24,15 @@ import java.io.File;
 
 public class CameraActivity extends Activity implements CvCameraViewListener2 {
 
-    private static final String    TAG                 = "Camera Fragment";
+    private static final String TAG = "Camera Fragment";
 
-    private Mat                    mRgba;
-    private Mat                    mGray;
-    private JNIDetector            mNativeDetector;
+    private Mat mRgba;
+    private Mat mGray;
+    private JNIDetector mNativeDetector;
 
-    private PortraitCameraView   mOpenCvCameraView;
+    private PortraitCameraView mOpenCvCameraView;
+
+    private boolean imageCaptured = false;
 
     private BaseLoaderCallback  mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -59,6 +65,16 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
         mOpenCvCameraView = (PortraitCameraView) findViewById(R.id.camera_view);
         mOpenCvCameraView.setCvCameraViewListener(this);
         mOpenCvCameraView.enableView();
+
+        final Button captureButton = (Button) findViewById(R.id.button_capture);
+        captureButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        imageCaptured = true;
+                    }
+                }
+        );
     }
 
     @Override
@@ -122,9 +138,19 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
         int v1 = Integer.parseInt(v1e.getText().toString());
         int v2 = Integer.parseInt(v2e.getText().toString());
 
-        nativeColorDetect2(mRgba.getNativeObjAddr(), h1, h2, s1, s2, v1, v2);
+        float weight = nativeColorDetect2(mRgba.getNativeObjAddr(), h1, h2, s1, s2, v1, v2);
+        Log.d(TAG, Float.toString(weight));
 
-//        nativeColorDetect(mRgba.getNativeObjAddr());
+//      float weight = nativeColorDetect(mRgba.getNativeObjAddr());
+
+        if (imageCaptured) {
+            float result = weight;
+
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("result", weight);
+            setResult(Activity.RESULT_OK,returnIntent);
+            finish();
+        }
 
         return mRgba;
     }
@@ -145,6 +171,6 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
         return super.onOptionsItemSelected(item);
     }
 
-//    private native void nativeColorDetect(long inputImage);
-    private native void nativeColorDetect2(long inputImage, int h1, int h2, int s1, int s2, int v1, int v2);
+//    private native float nativeColorDetect(long inputImage);
+    private native float nativeColorDetect2(long inputImage, int h1, int h2, int s1, int s2, int v1, int v2);
 }

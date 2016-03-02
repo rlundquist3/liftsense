@@ -22,21 +22,27 @@ string MultipleObjectTracking::intToString(int number) {
 
 void MultipleObjectTracking::drawObject(vector<Object> theObjects,Mat &frame, Mat &temp, vector<vector<Point> > contours, vector<Vec4i> hierarchy) {
 
-	for(int i =0; i<theObjects.size(); i++){
-	cv::drawContours(frame,contours,i,theObjects.at(i).getColor(),3,8,hierarchy);
-	cv::circle(frame,cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()),5,theObjects.at(i).getColor());
-	cv::putText(frame,intToString(theObjects.at(i).getXPos())+ " , " + intToString(theObjects.at(i).getYPos()),cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()+20),1,1,theObjects.at(i).getColor());
-	cv::putText(frame,theObjects.at(i).getType(),cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()-20),1,2,theObjects.at(i).getColor());
+	for(int i =0; i<theObjects.size(); i++) {
+		cv::drawContours(frame,contours,i,theObjects.at(i).getColor(),3,8,hierarchy);
+		cv::circle(frame,cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()),5,theObjects.at(i).getColor());
+		cv::putText(frame,intToString(theObjects.at(i).getXPos())+ " , " + intToString(theObjects.at(i).getYPos()),cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()+20),1,1,theObjects.at(i).getColor());
+		cv::putText(frame,theObjects.at(i).getType(),cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()-20),1,2,theObjects.at(i).getColor());
+
+		if (theObjects.at(i).getType() == "green")
+			totalWeight += 5;
+		else if (theObjects.at(i).getType() == "blue")
+			totalWeight += 10;
+		else if (theObjects.at(i).getType() == "yellow")
+			totalWeight += 20;
 	}
 }
 
 void MultipleObjectTracking::drawObject(vector<Object> theObjects,Mat &frame) {
 
-	for(int i =0; i<theObjects.size(); i++){
-
-	cv::circle(frame,cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()),10,cv::Scalar(0,0,255));
-	cv::putText(frame,intToString(theObjects.at(i).getXPos())+ " , " + intToString(theObjects.at(i).getYPos()),cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()+20),1,1,Scalar(0,255,0));
-	cv::putText(frame,theObjects.at(i).getType(),cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()-30),1,2,theObjects.at(i).getColor());
+	for(int i =0; i<theObjects.size(); i++) {
+		cv::circle(frame,cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()),10,cv::Scalar(0,0,255));
+		cv::putText(frame,intToString(theObjects.at(i).getXPos())+ " , " + intToString(theObjects.at(i).getYPos()),cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()+20),1,1,Scalar(0,255,0));
+		cv::putText(frame,theObjects.at(i).getType(),cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()-30),1,2,theObjects.at(i).getColor());
 	}
 }
 
@@ -159,7 +165,7 @@ void MultipleObjectTracking::trackFilteredObject(Object theObject,Mat threshold,
  * Formerly main--changed to be function called by main.cpp
  */
 //int main(int argc, char* argv[])
-//void MultipleObjectTracking::detect(jlong imageRgba) {
+//jfloat MultipleObjectTracking::detect(jlong imageRgba) {
 //	bool calibrationMode = false;
 //
 //	//Matrix to store each frame of the webcam feed
@@ -209,14 +215,14 @@ void MultipleObjectTracking::trackFilteredObject(Object theObject,Mat threshold,
 //		}
 //	}
 //
-//	return;
+//	return totalWeight;
 //}
 
 /**
  * Formerly main--changed to be function called by main.cpp
  */
 //int main(int argc, char* argv[])
-void MultipleObjectTracking::detect(jlong imageRgba, jint h1, jint h2, jint s1, jint s2, jint v1, jint v2) {
+jfloat MultipleObjectTracking::detect(jlong imageRgba, jint h1, jint h2, jint s1, jint s2, jint v1, jint v2) {
 	bool calibrationMode = false;
 
 	//Matrix to store each frame of the webcam feed
@@ -267,5 +273,5 @@ void MultipleObjectTracking::detect(jlong imageRgba, jint h1, jint h2, jint s1, 
 		}
 	}
 
-	return;
+	return totalWeight+5;
 }

@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:inputType="number|numberDecimal"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/weight_field"
         android:layout_marginTop="78dp"
         android:layout_marginLeft="52dp"
         android:layout_marginStart="52dp"
@@ -31,9 +31,9 @@
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:id="@+id/spinner"
-        android:layout_alignBottom="@+id/editText"
-        android:layout_toRightOf="@+id/editText"
-        android:layout_alignTop="@+id/editText"
+        android:layout_alignBottom="@+id/weight_field"
+        android:layout_toRightOf="@+id/weight_field"
+        android:layout_alignTop="@+id/weight_field"
         android:spinnerMode="dropdown"
         android:entries="@array/unit_selection" />
 

@@ -12,10 +12,10 @@ extern "C" {
  * Method:    nativeColorDetect
  * Signature: (J)V
  */
-JNIEXPORT void JNICALL Java_com_rileylundquist_liftsense_CameraActivity_nativeColorDetect
+JNIEXPORT jfloat JNICALL Java_com_rileylundquist_liftsense_CameraActivity_nativeColorDetect
   (JNIEnv *, jobject, jlong);
 
-JNIEXPORT void JNICALL Java_com_rileylundquist_liftsense_CameraActivity_nativeColorDetect2
+JNIEXPORT jfloat JNICALL Java_com_rileylundquist_liftsense_CameraActivity_nativeColorDetect2
 (JNIEnv *, jobject, jlong, jint, jint, jint, jint, jint, jint);
 
 #ifdef __cplusplus
