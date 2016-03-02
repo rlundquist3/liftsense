@@ -21,60 +21,35 @@ Object::Object(string name){
 	setType(name);
 
 	if(name=="green"){
-
-		//TODO: use "calibration mode" to find HSV min
-		//and HSV max values
-
 		setHSVmin(Scalar(22,10,10));
 		setHSVmax(Scalar(80,255,255));
 
 		setColor(Scalar(0,255,0));
-
 	}
 	else if(name=="blue"){
-
-		//TODO: use "calibration mode" to find HSV min
-		//and HSV max values
-
 		setHSVmin(Scalar(0, 50, 50));
 		setHSVmax(Scalar(20,255,255));
 
 		setColor(Scalar(0,0,255));
-
 	}
 	else if(name=="yellow"){
-
-		//TODO: use "calibration mode" to find HSV min
-		//and HSV max values
-
 		setHSVmin(Scalar(83, 50, 50));
 		setHSVmax(Scalar(90,255,255));
 
 		setColor(Scalar(255,255,0));
-
 	}
 //	if(name=="red"){
-//
-//		//TODO: use "calibration mode" to find HSV min
-//		//and HSV max values
-//
 //		setHSVmin(Scalar(92,0,0));
 //		setHSVmax(Scalar(124,256,256));
 //
 //		setColor(Scalar(255,0,0));
-//
 //	}
 
 //	if(name=="blue2"){
-//
-//		//TODO: use "calibration mode" to find HSV min
-//		//and HSV max values
-//
 //		setHSVmin(Scalar(20,124,123));
 //		setHSVmax(Scalar(30,256,256));
 //
 //		setColor(Scalar(0,255,255));
-//
 //	}
 
 }
