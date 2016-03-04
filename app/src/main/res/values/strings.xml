@@ -20,6 +20,7 @@
         <item>lbs</item>
         <item>kg</item>
     </string-array>
-    <string name="title_exercise_list">Exercises</string>
-    <string name="title_exercise_detail">Exercise Detail</string>
+    <string name="title_exercise_list">Workout</string>
+    <string name="title_exercise_detail">Exercise</string>
+
 </resources>

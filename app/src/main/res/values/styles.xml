@@ -7,9 +7,10 @@
     </style>
 
     <style name="LiftSenseActionBar" parent="android:Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@color/blue</item>
-        <item name="android:layout_gravity">center</item>
+        <item name="android:background">@color/dark_green</item>
         <item name="android:titleTextStyle">@style/ActionBarText</item>
+        <item name="android:title">@string/app_name</item>
+        <item name="android:layout_height">56dp</item>
     </style>
 
     <style name="ActionBarText" parent="android:TextAppearance.Holo.Widget.ActionBar.Title">
