@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import org.opencv.android.BaseLoaderCallback;
@@ -66,7 +67,7 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
         mOpenCvCameraView.setCvCameraViewListener(this);
         mOpenCvCameraView.enableView();
 
-        final Button captureButton = (Button) findViewById(R.id.button_capture);
+        final ImageButton captureButton = (ImageButton) findViewById(R.id.button_capture);
         captureButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override

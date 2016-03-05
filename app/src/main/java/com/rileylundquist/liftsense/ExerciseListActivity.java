@@ -82,7 +82,6 @@ public class ExerciseListActivity extends Activity
      */
     @Override
     public void onItemSelected(String id) {
-        Log.d("x", "item selected");
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
@@ -98,7 +97,6 @@ public class ExerciseListActivity extends Activity
         } else {
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
-            Log.d("x", "go to detail");
             Intent detailIntent = new Intent(this, ExerciseDetailActivity.class);
             detailIntent.putExtra(ExerciseDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);

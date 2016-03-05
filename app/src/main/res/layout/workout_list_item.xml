@@ -49,6 +49,8 @@
         android:background="@drawable/toggle_layout"
         android:textOff=""
         android:textOn=""
-        android:checked="false" />
+        android:checked="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
 
 </RelativeLayout>

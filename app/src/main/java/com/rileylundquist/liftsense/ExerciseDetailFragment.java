@@ -56,6 +56,11 @@ public class ExerciseDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_exercise_detail, container, false);
 
+        if (mItem != null) {
+            Log.d("TEST", mItem.content);
+            getActivity().getActionBar().setTitle(mItem.content);
+        }
+
         return rootView;
     }
 
