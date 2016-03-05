@@ -37,7 +37,7 @@ public class WorkoutActivity extends  ListActivity {
     }
 
     private void setupAdapter() {
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.workout_list_item, R.id.listItem, workoutItems);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.workout_list_item, R.id.exercise_name, workoutItems);
         setListAdapter(arrayAdapter);
     }
 

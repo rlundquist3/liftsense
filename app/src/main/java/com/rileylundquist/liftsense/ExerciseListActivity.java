@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.MenuItem;
 
 /**
@@ -52,6 +53,9 @@ public class ExerciseListActivity extends Activity
                     .setActivateOnItemClick(true);
         }
 
+        //Pull workout name from service
+        getActionBar().setTitle("Workout Name");
+
         // TODO: If exposing deep links into your app, handle intents here.
     }
 
@@ -78,6 +82,7 @@ public class ExerciseListActivity extends Activity
      */
     @Override
     public void onItemSelected(String id) {
+        Log.d("x", "item selected");
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
@@ -93,6 +98,7 @@ public class ExerciseListActivity extends Activity
         } else {
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
+            Log.d("x", "go to detail");
             Intent detailIntent = new Intent(this, ExerciseDetailActivity.class);
             detailIntent.putExtra(ExerciseDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);

@@ -80,7 +80,7 @@ public class ExerciseListFragment extends ListFragment {
         setListAdapter(new ArrayAdapter<String>(
                 getActivity(),
                 R.layout.workout_list_item,
-                R.id.listItem,
+                R.id.exercise_name,
                 exerciseList));
     }
 

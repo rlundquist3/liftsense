@@ -56,12 +56,6 @@ public class ExerciseDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_exercise_detail, container, false);
 
-        // Show the dummy content as text in a TextView.
-        if (mItem != null) {
-            Log.d("TEST", mItem.content);
-            ((TextView) rootView.findViewById(R.id.exerciseName)).setText(mItem.content);
-        }
-
         return rootView;
     }
 
