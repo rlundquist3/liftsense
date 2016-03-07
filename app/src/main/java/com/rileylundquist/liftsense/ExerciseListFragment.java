@@ -23,7 +23,7 @@ import java.util.Arrays;
  */
 public class ExerciseListFragment extends ListFragment {
 
-    private ArrayList<String> exerciseList;
+    private ArrayList<Exercise> exerciseList;
     /**
      * The serialization (saved instance state) Bundle key representing the
      * activated item position. Only used on tablets.
@@ -75,13 +75,14 @@ public class ExerciseListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         String[] exerciseArray = getResources().getStringArray(R.array.exercise_list);
-        exerciseList = new ArrayList<String>(Arrays.asList(exerciseArray));
+        exerciseList = new ArrayList<Exercise>();
 
-        setListAdapter(new ArrayAdapter<String>(
-                getActivity(),
-                R.layout.workout_list_item,
-                R.id.exercise_name,
-                exerciseList));
+        for (int i=0; i<exerciseArray.length; i++)
+            exerciseList.add(new Exercise(exerciseArray[i]));
+
+        ExerciseListAdapter listAdapter = new ExerciseListAdapter(this.getActivity(), exerciseList);
+        getListView().setAdapter(listAdapter);
+
     }
 
     @Override
@@ -122,7 +123,7 @@ public class ExerciseListFragment extends ListFragment {
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
         //mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
-        mCallbacks.onItemSelected(exerciseList.get(position));
+        mCallbacks.onItemSelected(exerciseList.get(position).getName());
     }
 
     @Override
