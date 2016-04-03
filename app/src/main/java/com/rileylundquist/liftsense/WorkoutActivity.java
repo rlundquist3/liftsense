@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +13,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.rileylundquist.liftsense.database.WorkoutDBHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +24,25 @@ public class WorkoutActivity extends  ListActivity {
 
     public static final String EXTRA_EXERCISE = "com.rileylundquist.liftsense.EXERCISE";
     private List<String> workoutItems;
-    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getApplicationContext());
+    private AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getApplicationContext());
+    private WorkoutDBHelper dbHelper;
+    private SQLiteDatabase db;
+    private boolean dbReady;
+
+    private class DBTask extends AsyncTask {
+
+        @Override
+        protected Boolean doInBackground(Object[] params) {
+            dbHelper = new WorkoutDBHelper(getApplicationContext());
+            db = dbHelper.getWritableDatabase();
+            return Boolean.TRUE;
+        }
+
+        protected void onPostExecute(Boolean ready) {
+            dbReady = ready.booleanValue();
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +56,8 @@ public class WorkoutActivity extends  ListActivity {
         setupAdapter();
 
         setupLongClick();
+
+        new DBTask().execute();
     }
 
     private void setupAdapter() {

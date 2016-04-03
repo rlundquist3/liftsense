@@ -29,11 +29,13 @@ void MultipleObjectTracking::drawObject(vector<Object> theObjects,Mat &frame, Ma
 		cv::putText(frame,theObjects.at(i).getType(),cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()-20),1,2,theObjects.at(i).getColor());
 
 		if (theObjects.at(i).getType() == "green")
-			totalWeight += 5;
-		else if (theObjects.at(i).getType() == "blue")
-			totalWeight += 10;
+			totalWeight += 25;
 		else if (theObjects.at(i).getType() == "yellow")
-			totalWeight += 20;
+			totalWeight += 35;
+		else if (theObjects.at(i).getType() == "blue")
+			totalWeight += 45;
+		else if (theObjects.at(i).getType() == "yellow")
+			totalWeight += 55;
 	}
 }
 
@@ -153,6 +155,7 @@ jfloat MultipleObjectTracking::detect(jlong imageRgba, jint h1, jint h2, jint s1
     colors.push_back(Object("blue"));
     colors.push_back(Object("yellow"));
     colors.push_back(Object("green"));
+	colors.push_back(Object("red"));
     colors.push_back(Object(h1, h2, s1, s2, v1, v2));
 
     for (int i=0; i<colors.size(); i++) {

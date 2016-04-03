@@ -38,6 +38,18 @@ Object::Object(string name){
 
 		setColor(Scalar(255,255,0));
 	}
+	else if(name=="red"){
+		setHSVmin(Scalar(105, 50, 50));
+		setHSVmax(Scalar(125,255,255));
+
+		setColor(Scalar(255,0,0));
+	}
+	else if(name=="black"){
+		setHSVmin(Scalar(0, 0, 0));
+		setHSVmax(Scalar(179,255,50));
+
+		setColor(Scalar(0,0,0));
+	}
 //	if(name=="red"){
 //		setHSVmin(Scalar(92,0,0));
 //		setHSVmax(Scalar(124,256,256));
