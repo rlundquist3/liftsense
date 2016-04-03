@@ -24,7 +24,9 @@
         android:layout_marginBottom="23dp"
         android:layout_above="@+id/reps_field"
         android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/unit_spinner" />
+        android:layout_toStartOf="@+id/unit_spinner"
+        android:autoText="false"
+        android:hint="sets" />
 
     <EditText
         android:layout_width="140dp"
@@ -36,7 +38,8 @@
         android:layout_marginBottom="23dp"
         android:layout_above="@+id/weight_field"
         android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/unit_spinner" />
+        android:layout_toStartOf="@+id/unit_spinner"
+        android:hint="reps" />
 
     <EditText
         android:layout_width="140dp"
@@ -48,7 +51,8 @@
         android:layout_marginStart="53dp"
         android:layout_above="@+id/button"
         android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/unit_spinner" />
+        android:layout_toStartOf="@+id/unit_spinner"
+        android:hint="weight/mass" />
 
     <Spinner
         android:layout_width="70dp"

@@ -16,7 +16,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="13dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_marginLeft="24dp" />
 
     <TextView
         android:id="@+id/exercise_detail_text"
