@@ -23,7 +23,8 @@ import java.util.Arrays;
  */
 public class ExerciseListFragment extends ListFragment {
 
-    private ArrayList<Exercise> exerciseList;
+    //private ArrayList<Exercise> exerciseList;
+    private  ArrayList<String> exerciseList;
     /**
      * The serialization (saved instance state) Bundle key representing the
      * activated item position. Only used on tablets.
@@ -75,13 +76,20 @@ public class ExerciseListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         String[] exerciseArray = getResources().getStringArray(R.array.exercise_list);
-        exerciseList = new ArrayList<Exercise>();
+//        exerciseList = new ArrayList<Exercise>();
+//
+//        for (int i=0; i<exerciseArray.length; i++)
+//            exerciseList.add(new Exercise(exerciseArray[i]));
+//
+//        ExerciseListAdapter listAdapter = new ExerciseListAdapter(this.getActivity(), exerciseList);
+//        getListView().setAdapter(listAdapter);
+        exerciseList = new ArrayList<String>(Arrays.asList(exerciseArray));
 
-        for (int i=0; i<exerciseArray.length; i++)
-            exerciseList.add(new Exercise(exerciseArray[i]));
-
-        ExerciseListAdapter listAdapter = new ExerciseListAdapter(this.getActivity(), exerciseList);
-        getListView().setAdapter(listAdapter);
+        setListAdapter(new ArrayAdapter<String>(
+                getActivity(),
+                R.layout.workout_list_item,
+                R.id.exercise_name,
+                exerciseList));
 
     }
 
@@ -123,7 +131,8 @@ public class ExerciseListFragment extends ListFragment {
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
         //mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
-        mCallbacks.onItemSelected(exerciseList.get(position).getName());
+//        mCallbacks.onItemSelected(exerciseList.get(position).getName());
+        mCallbacks.onItemSelected(exerciseList.get(position));
     }
 
     @Override
