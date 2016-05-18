@@ -18,6 +18,8 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ExerciseListFragment.Callbacks {
 
+    private FloatingActionButton fab;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,14 +27,8 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        setFabWorkout();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -115,11 +111,8 @@ public class MainActivity extends AppCompatActivity
         transaction.replace(R.id.fragment_container, listFragment);
         transaction.addToBackStack(null);
         transaction.commit();
-    }
 
-    public void goToExercise() {
-        // Should be covered by onItemSelected
-        // TODO: Remove
+        fab.hide();
     }
 
     public void goToProfile() {
@@ -129,6 +122,8 @@ public class MainActivity extends AppCompatActivity
 //        transaction.replace(R.id.fragment_container, listFragment);
 //        transaction.addToBackStack(null);
 //        transaction.commit();
+
+        setFabWorkout();
     }
 
     public void goToSettings() {
@@ -155,6 +150,8 @@ public class MainActivity extends AppCompatActivity
         transaction.replace(R.id.fragment_container, detailFragment);
         transaction.addToBackStack(null);
         transaction.commit();
+
+        setFabCamera();
     }
 
     public void goToCamera() {
@@ -162,5 +159,27 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, CameraActivity.class);
         //intent.putExtra(EXTRA_EXERCISE, mItem.content);
         startActivityForResult(intent, 1);
+    }
+
+    public void setFabCamera() {
+        fab.setImageResource(R.drawable.ic_camera_alt__white_24dp);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToCamera();
+            }
+        });
+        fab.show();
+    }
+
+    public void setFabWorkout() {
+        fab.setImageResource(R.drawable.ic_barbell_white_24px);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToWorkout();
+            }
+        });
+        fab.show();
     }
 }

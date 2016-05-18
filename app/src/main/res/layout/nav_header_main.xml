@@ -14,11 +14,10 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="81dp"
-        android:layout_height="wrap_content"
+        android:layout_width="64dp"
+        android:layout_height="73dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@drawable/ic_barbell_white_24px"
-        android:layout_weight="1.35" />
+        android:src="@drawable/ic_barbell_white_24px" />
 
     <TextView
         android:layout_width="match_parent"
