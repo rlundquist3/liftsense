@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.rileylundquist.liftsense" >
+    package="com.rileylundquist.liftsense">
 
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -21,37 +21,46 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".CameraActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/CameraTheme">
-        </activity>
-        <activity
-            android:name=".HomeActivity"
-            android:label="@string/app_name" >
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <!--activity
+            android:name=".HomeActivity_old"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity-->
         <activity
             android:name=".ExerciseListActivity"
             android:label="@string/title_exercise_list"
-            android:parentActivityName=".HomeActivity" >
+            android:parentActivityName=".HomeActivity_old">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.rileylundquist.liftsense.HomeActivity" />
+                android:value=".HomeActivity_old" />
         </activity>
         <activity
             android:name=".ExerciseDetailActivity"
             android:label="@string/title_exercise_detail"
-            android:parentActivityName=".ExerciseListActivity" >
+            android:parentActivityName=".ExerciseListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.rileylundquist.liftsense.ExerciseListActivity" />
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

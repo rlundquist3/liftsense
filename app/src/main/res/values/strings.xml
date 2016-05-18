@@ -22,5 +22,9 @@
     </string-array>
     <string name="title_exercise_list">Workout</string>
     <string name="title_exercise_detail">Exercise</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
 </resources>

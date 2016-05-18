@@ -48,9 +48,9 @@ public class ExerciseListActivity extends Activity
 
             // In two-pane mode, list items should be given the
             // 'activated' state when touched.
-            ((ExerciseListFragment) getFragmentManager()
-                    .findFragmentById(R.id.exercise_list))
-                    .setActivateOnItemClick(true);
+//            ((ExerciseListFragment) getFragmentManager()
+//                    .findFragmentById(R.id.exercise_list))
+//                    .setActivateOnItemClick(true);
         }
 
         //Pull workout name from service
@@ -90,9 +90,9 @@ public class ExerciseListActivity extends Activity
             arguments.putString(ExerciseDetailFragment.ARG_ITEM_ID, id);
             ExerciseDetailFragment fragment = new ExerciseDetailFragment();
             fragment.setArguments(arguments);
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.exercise_detail_container, fragment)
-                    .commit();
+//            getFragmentManager().beginTransaction()
+//                    .replace(R.id.exercise_detail_container, fragment)
+//                    .commit();
 
         } else {
             // In single-pane mode, simply start the detail activity
