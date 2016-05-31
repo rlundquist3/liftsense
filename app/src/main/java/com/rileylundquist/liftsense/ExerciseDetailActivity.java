@@ -46,9 +46,9 @@ public class ExerciseDetailActivity extends Activity {
                     getIntent().getStringExtra(ExerciseDetailFragment.ARG_ITEM_ID));
             ExerciseDetailFragment fragment = new ExerciseDetailFragment();
             fragment.setArguments(arguments);
-            getFragmentManager().beginTransaction()
-                    .add(R.id.exercise_detail_container, fragment)
-                    .commit();
+//            getFragmentManager().beginTransaction()
+//                    .add(R.id.exercise_detail_container, fragment)
+//                    .commit();
         }
     }
 
