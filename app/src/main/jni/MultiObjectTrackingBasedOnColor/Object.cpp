@@ -21,7 +21,7 @@ Object::Object(string name){
 	setType(name);
 
 	if(name=="green"){
-		setHSVmin(Scalar(22,10,75));
+		setHSVmin(Scalar(22,50,75));
 		setHSVmax(Scalar(80,255,255));
 
 		setColor(Scalar(0,255,0));
