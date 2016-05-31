@@ -58,7 +58,9 @@ public class ExerciseDetailFragment extends Fragment {
 
         if (mItem != null) {
             Log.d("TEST", mItem.content);
-            getActivity().getActionBar().setTitle(mItem.content);
+            TextView name = (TextView) getActivity().findViewById(R.id.exercise_detail_name);
+            name.setText(mItem.content);
+//            getActivity().getActionBar().setTitle(mItem.content);
         }
 
         return rootView;

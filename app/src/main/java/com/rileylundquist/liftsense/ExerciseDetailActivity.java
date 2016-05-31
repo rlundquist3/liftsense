@@ -1,12 +1,18 @@
 package com.rileylundquist.liftsense;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import com.rileylundquist.liftsense.database.WorkoutContract;
+import com.rileylundquist.liftsense.database.WorkoutDbHelper;
 
 /**
  * An activity representing a single Exercise detail screen. This
@@ -85,5 +91,25 @@ public class ExerciseDetailActivity extends Activity {
             if (resultCode == Activity.RESULT_CANCELED)
                 ;
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        saveToDb();
+    }
+
+    private void saveToDb() {
+        WorkoutDbHelper dbHelper = new WorkoutDbHelper(getApplicationContext());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(WorkoutContract.WorkoutEntry.COLUMN_NAME_NAME, ((TextView) findViewById(R.id.exercise_detail_name)).getText().toString());
+        values.put(WorkoutContract.WorkoutEntry.COLUMN_NAME_SETS, ((EditText) findViewById(R.id.sets_field)).getText().toString());
+        values.put(WorkoutContract.WorkoutEntry.COLUMN_NAME_REPS, ((EditText) findViewById(R.id.reps_field)).getText().toString());
+        values.put(WorkoutContract.WorkoutEntry.COLUMN_NAME_WEIGHT, ((EditText) findViewById(R.id.weight_field)).getText().toString());
+
+        db.insert(WorkoutContract.WorkoutEntry.TABLE_NAME, null, values);
     }
 }

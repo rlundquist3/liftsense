@@ -5,6 +5,13 @@
     android:id="@+id/exercise_detail"
     tools:context="com.rileylundquist.liftsense.ExerciseDetailFragment">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/exercise_detail_name"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="24dp" />
+
     <ImageView
         android:layout_width="188dp"
         android:layout_height="188dp"
