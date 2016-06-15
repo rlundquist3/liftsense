@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "982747666987",
+    "firebase_url": "https://project-8942338683786135486.firebaseio.com",
+    "project_id": "project-8942338683786135486",
+    "storage_bucket": "project-8942338683786135486.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982747666987:android:9bca07668abd56ee",
+        "android_client_info": {
+          "package_name": "com.rileylundquist.liftsense"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "982747666987-ec1uljt530h8taosdf4fg1l2qef12ldq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4QveW9Ge1MnZ2X7-padfEdvAcXwF9Jk8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
