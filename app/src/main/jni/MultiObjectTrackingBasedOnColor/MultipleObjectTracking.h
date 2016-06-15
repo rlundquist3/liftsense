@@ -41,7 +41,7 @@ private:
     //max number of objects to be detected in frame
     const int MAX_NUM_OBJECTS=50;
     //minimum and maximum object area
-    const int MIN_OBJECT_AREA = 20*20;
+    const int MIN_OBJECT_AREA = 100*100;
     const int MAX_OBJECT_AREA = FRAME_HEIGHT*FRAME_WIDTH/1.5;
 
     float totalWeight = 0;
