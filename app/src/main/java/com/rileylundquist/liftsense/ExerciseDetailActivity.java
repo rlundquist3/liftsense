@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -83,6 +84,7 @@ public class ExerciseDetailActivity extends Activity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("Debug", "activity result returned");
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
                 EditText weightField = (EditText) findViewById(R.id.weight_field);
