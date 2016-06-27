@@ -48,7 +48,8 @@ public class MainActivity extends AppCompatActivity
                 return;
             }
 
-            goToWorkout();
+//            goToWorkout();
+            goToCamera();
         }
     }
 
