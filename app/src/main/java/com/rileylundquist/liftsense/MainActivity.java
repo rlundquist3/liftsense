@@ -82,11 +82,13 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            goToSettings();
             return true;
         } else if (id == R.id.action_sign_out) {
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(this, LoginActivity.class);
             startActivityForResult(intent, 1);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -149,8 +151,8 @@ public class MainActivity extends AppCompatActivity
 //        transaction.replace(R.id.fragment_container, listFragment);
 //        transaction.addToBackStack(null);
 //        transaction.commit();
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivityForResult(intent, 1);
+//        Intent intent = new Intent(this, SettingsActivity.class);
+//        startActivityForResult(intent, 1);
     }
 
     /**
