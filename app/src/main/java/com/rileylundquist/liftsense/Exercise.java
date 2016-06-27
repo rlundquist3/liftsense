@@ -1,10 +1,25 @@
 package com.rileylundquist.liftsense;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by riley on 3/6/16.
  */
 public class Exercise {
 
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    private String uid;
     private int sets;
     private int reps;
     private float weight;
@@ -12,6 +27,9 @@ public class Exercise {
     private boolean done;
 
     public Exercise(String name) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null)
+            this.setUid(user.getUid());
         this.setName(name);
         this.setSets(0);
         this.setReps(0);
@@ -19,10 +37,26 @@ public class Exercise {
     }
 
     public Exercise(String name, int sets, int reps, float weight) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null)
+            this.setUid(user.getUid());
         this.setName(name);
         this.setSets(sets);
         this.setReps(reps);
         this.setWeight(weight);
+    }
+
+
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("uid", uid);
+        result.put("name", name);
+        result.put("sets", sets);
+        result.put("reps", reps);
+        result.put("weight", weight);
+        result.put("done", done);
+
+        return result;
     }
 
     public int getSets() {

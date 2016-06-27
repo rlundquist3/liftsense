@@ -3,12 +3,17 @@ package com.rileylundquist.liftsense;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.rileylundquist.liftsense.WorkoutContent;
 
 import org.w3c.dom.Text;
@@ -19,7 +24,7 @@ import org.w3c.dom.Text;
  * in two-pane mode (on tablets) or a {@link ExerciseDetailActivity}
  * on handsets.
  */
-public class ExerciseDetailFragment extends Fragment {
+public class ExerciseDetailFragment extends Fragment implements View.OnClickListener {
 
     /**
      * The fragment argument representing the item ID that this fragment
@@ -31,6 +36,10 @@ public class ExerciseDetailFragment extends Fragment {
      * The dummy content this fragment is presenting.
      */
     private WorkoutContent.Exercise mItem;
+
+    private Button saveButton;
+
+    private DatabaseReference mDatabase;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -49,6 +58,8 @@ public class ExerciseDetailFragment extends Fragment {
 //             to load content from a content provider.
             mItem = WorkoutContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
         }
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
@@ -63,7 +74,26 @@ public class ExerciseDetailFragment extends Fragment {
 //            getActivity().getActionBar().setTitle(mItem.content);
         }
 
+        saveButton = (Button) rootView.findViewById(R.id.save_button);
+        saveButton.setOnClickListener(this);
+
+
         return rootView;
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.save_button:
+                FragmentManager manager = getFragmentManager();
+                manager.popBackStack();
+                break;
+                   }
+    }
+
+    @Override
+    public void onPause() {
+        //To finish after other db stuff--i.e. pulling workout data
+        //update workout data here
+    }
 }
