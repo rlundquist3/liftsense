@@ -52,12 +52,12 @@ public class ExerciseDetailFragment extends Fragment implements View.OnClickList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
-//             Load the dummy content specified by the fragment
-//             arguments. In a real-world scenario, use a Loader
-//             to load content from a content provider.
-            mItem = WorkoutContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
-        }
+//        if (getArguments().containsKey(ARG_ITEM_ID)) {
+////             Load the dummy content specified by the fragment
+////             arguments. In a real-world scenario, use a Loader
+////             to load content from a content provider.
+//            mItem = WorkoutContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+//        }
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
@@ -74,8 +74,8 @@ public class ExerciseDetailFragment extends Fragment implements View.OnClickList
 //            getActivity().getActionBar().setTitle(mItem.content);
         }
 
-        saveButton = (Button) rootView.findViewById(R.id.save_button);
-        saveButton.setOnClickListener(this);
+//        saveButton = (Button) rootView.findViewById(R.id.save_button);
+//        saveButton.setOnClickListener(this);
 
 
         return rootView;
@@ -84,10 +84,10 @@ public class ExerciseDetailFragment extends Fragment implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.save_button:
-                FragmentManager manager = getFragmentManager();
-                manager.popBackStack();
-                break;
+//            case R.id.save_button:
+//                FragmentManager manager = getFragmentManager();
+//                manager.popBackStack();
+//                break;
                    }
     }
 
@@ -95,5 +95,6 @@ public class ExerciseDetailFragment extends Fragment implements View.OnClickList
     public void onPause() {
         //To finish after other db stuff--i.e. pulling workout data
         //update workout data here
+        super.onPause();
     }
 }

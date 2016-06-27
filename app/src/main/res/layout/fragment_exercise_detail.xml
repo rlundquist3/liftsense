@@ -57,13 +57,5 @@
         android:layout_marginBottom="28dp"
         android:visibility="invisible" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save"
-        android:id="@+id/save_button"
-        android:layout_alignBottom="@+id/button"
-        android:layout_centerHorizontal="true" />
-
 
 </RelativeLayout>

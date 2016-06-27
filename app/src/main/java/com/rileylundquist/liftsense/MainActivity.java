@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity
             }
 
 //            goToWorkout();
-            goToCamera();
+            goToExercise();
         }
     }
 
@@ -93,21 +94,25 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_workout) {
             goToWorkout();
-        } else if (id == R.id.nav_profile) {
-            goToProfile();
         } else if (id == R.id.nav_camera) {
             goToCamera();
         } else if (id == R.id.nav_manage) {
             goToSettings();
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void goToExercise() {
+        ExerciseDetailFragment detailFragment = new ExerciseDetailFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, detailFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+        setFabCamera();
+        fab.show();
     }
 
     public void goToWorkout() {

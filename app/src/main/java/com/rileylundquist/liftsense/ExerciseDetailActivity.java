@@ -108,8 +108,8 @@ public class ExerciseDetailActivity extends Activity {
 
         ContentValues values = new ContentValues();
         values.put(WorkoutContract.WorkoutEntry.COLUMN_NAME_NAME, ((TextView) findViewById(R.id.exercise_detail_name)).getText().toString());
-        values.put(WorkoutContract.WorkoutEntry.COLUMN_NAME_SETS, ((EditText) findViewById(R.id.sets_field)).getText().toString());
-        values.put(WorkoutContract.WorkoutEntry.COLUMN_NAME_REPS, ((EditText) findViewById(R.id.reps_field)).getText().toString());
+//        values.put(WorkoutContract.WorkoutEntry.COLUMN_NAME_SETS, ((EditText) findViewById(R.id.sets_field)).getText().toString());
+//        values.put(WorkoutContract.WorkoutEntry.COLUMN_NAME_REPS, ((EditText) findViewById(R.id.reps_field)).getText().toString());
         values.put(WorkoutContract.WorkoutEntry.COLUMN_NAME_WEIGHT, ((EditText) findViewById(R.id.weight_field)).getText().toString());
 
         db.insert(WorkoutContract.WorkoutEntry.TABLE_NAME, null, values);
