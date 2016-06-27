@@ -85,6 +85,8 @@ public class MainActivity extends AppCompatActivity
             return true;
         } else if (id == R.id.action_sign_out) {
             FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivityForResult(intent, 1);
         }
 
         return super.onOptionsItemSelected(item);
@@ -147,6 +149,8 @@ public class MainActivity extends AppCompatActivity
 //        transaction.replace(R.id.fragment_container, listFragment);
 //        transaction.addToBackStack(null);
 //        transaction.commit();
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivityForResult(intent, 1);
     }
 
     /**

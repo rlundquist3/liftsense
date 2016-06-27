@@ -116,41 +116,43 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
 
         mRgba = inputFrame.rgba();
 
-        /**
-         * Pass Mat to native environment
-         * Return outlines from native
-         * Draw returned outlines on frame
-         */
-        //Mat result = new Mat();
-        //mNativeDetector.colorDetect(mRgba, result);
+        if (imageCaptured) {
+            /**
+             * Pass Mat to native environment
+             * Return outlines from native
+             * Draw returned outlines on frame
+             */
+            //Mat result = new Mat();
+            //mNativeDetector.colorDetect(mRgba, result);
 
-        //mRgba = result;
+            //mRgba = result;
 
-        EditText h1e = (EditText) findViewById(R.id.editTextH);
-        EditText h2e = (EditText) findViewById(R.id.editTextH2);
-        EditText s1e = (EditText) findViewById(R.id.editTextS);
-        EditText s2e = (EditText) findViewById(R.id.editTextS2);
-        EditText v1e = (EditText) findViewById(R.id.editTextV);
-        EditText v2e = (EditText) findViewById(R.id.editTextV2);
-        int h1 = Integer.parseInt(h1e.getText().toString());
-        int h2 = Integer.parseInt(h2e.getText().toString());
-        int s1 = Integer.parseInt(s1e.getText().toString());
-        int s2 = Integer.parseInt(s2e.getText().toString());
-        int v1 = Integer.parseInt(v1e.getText().toString());
-        int v2 = Integer.parseInt(v2e.getText().toString());
+            EditText h1e = (EditText) findViewById(R.id.editTextH);
+            EditText h2e = (EditText) findViewById(R.id.editTextH2);
+            EditText s1e = (EditText) findViewById(R.id.editTextS);
+            EditText s2e = (EditText) findViewById(R.id.editTextS2);
+            EditText v1e = (EditText) findViewById(R.id.editTextV);
+            EditText v2e = (EditText) findViewById(R.id.editTextV2);
+            int h1 = Integer.parseInt(h1e.getText().toString());
+            int h2 = Integer.parseInt(h2e.getText().toString());
+            int s1 = Integer.parseInt(s1e.getText().toString());
+            int s2 = Integer.parseInt(s2e.getText().toString());
+            int v1 = Integer.parseInt(v1e.getText().toString());
+            int v2 = Integer.parseInt(v2e.getText().toString());
 
-        float weight = nativeColorDetect2(mRgba.getNativeObjAddr(), h1, h2, s1, s2, v1, v2);
-        Log.d(TAG, Float.toString(weight));
+            float weight = nativeColorDetect2(mRgba.getNativeObjAddr(), h1, h2, s1, s2, v1, v2);
+            Log.d(TAG, Float.toString(weight));
 
 //      float weight = nativeColorDetect(mRgba.getNativeObjAddr());
 
-        if (imageCaptured) {
-            float result = weight;
+            if (imageCaptured) {
+                float result = weight;
 
-            Intent returnIntent = new Intent();
-            returnIntent.putExtra("result", weight);
-            setResult(Activity.RESULT_OK,returnIntent);
-            finish();
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("result", weight);
+                setResult(Activity.RESULT_OK,returnIntent);
+                finish();
+            }
         }
 
         return mRgba;

@@ -34,7 +34,7 @@ void MultipleObjectTracking::drawObject(vector<Object> theObjects,Mat &frame, Ma
 			totalWeight += 35;
 		else if (theObjects.at(i).getType() == "blue")
 			totalWeight += 45;
-		else if (theObjects.at(i).getType() == "yellow")
+		else if (theObjects.at(i).getType() == "red")
 			totalWeight += 55;
 	}
 }
