@@ -23,7 +23,8 @@ import android.widget.EditText;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ExerciseListFragment.Callbacks, ProfileFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ExerciseListFragment.Callbacks,
+        ProfileFragment.OnFragmentInteractionListener, SettingsFragment.OnFragmentInteractionListener {
 
     private FloatingActionButton fab;
 
@@ -146,13 +147,13 @@ public class MainActivity extends AppCompatActivity
 
     public void goToSettings() {
         Snackbar.make(findViewById(R.id.fragment_container), "go to settings", Snackbar.LENGTH_LONG).show();
-//        ExerciseListFragment listFragment = new ExerciseListFragment();
+//        SettingsFragment settingsFragment = new SettingsFragment();
 //        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.fragment_container, listFragment);
+//        transaction.replace(R.id.fragment_container, settingsFragment);
 //        transaction.addToBackStack(null);
 //        transaction.commit();
-//        Intent intent = new Intent(this, SettingsActivity.class);
-//        startActivityForResult(intent, 1);
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivityForResult(intent, 1);
     }
 
     /**
@@ -177,7 +178,6 @@ public class MainActivity extends AppCompatActivity
     public void goToCamera() {
 //        Snackbar.make(findViewById(R.id.fragment_container), "go to camera", Snackbar.LENGTH_LONG).show();
         Intent intent = new Intent(this, CameraActivity.class);
-        //intent.putExtra(EXTRA_EXERCISE, mItem.content);
         startActivityForResult(intent, 1);
     }
 
