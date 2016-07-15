@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void goToSettings() {
-        Snackbar.make(findViewById(R.id.fragment_container), "go to settings", Snackbar.LENGTH_LONG).show();
+//        Snackbar.make(findViewById(R.id.fragment_container), "go to settings", Snackbar.LENGTH_LONG).show();
 //        SettingsFragment settingsFragment = new SettingsFragment();
 //        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 //        transaction.replace(R.id.fragment_container, settingsFragment);
