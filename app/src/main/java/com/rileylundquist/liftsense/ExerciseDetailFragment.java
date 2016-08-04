@@ -1,14 +1,17 @@
 package com.rileylundquist.liftsense;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseUser;
@@ -66,6 +69,9 @@ public class ExerciseDetailFragment extends Fragment implements View.OnClickList
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_exercise_detail, container, false);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+        String unit = sharedPref.getString("pref_units", "lbs");
+        ((TextView) rootView.findViewById(R.id.unit_text)).setText(unit);
 
         if (mItem != null) {
             Log.d("TEST", mItem.content);

@@ -2,7 +2,9 @@ package com.rileylundquist.liftsense;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -116,7 +118,7 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
 
         mRgba = inputFrame.rgba();
 
-        if (imageCaptured) {
+        if (/*imageCaptured*/true) {
             /**
              * Pass Mat to native environment
              * Return outlines from native
@@ -140,10 +142,28 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
             int v1 = Integer.parseInt(v1e.getText().toString());
             int v2 = Integer.parseInt(v2e.getText().toString());
 
-            float weight = nativeColorDetect2(mRgba.getNativeObjAddr(), h1, h2, s1, s2, v1, v2);
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+            String barOption = sharedPref.getString("pref_bar_weight", "0");
+            String unitOption = sharedPref.getString("pref_units", "0");
+
+            float barWeight = 0;
+            if (barOption.equals("0")) {
+                if (unitOption.equals("lbs"))
+                    barWeight = 45.0f;
+                else
+                    barWeight = 20.0f;
+            } else {
+                if (unitOption.equals("lbs"))
+                    barWeight = 35.0f;
+                else
+                    barWeight = 16.0f;
+            }
+
+            float weight = nativeColorDetect2(mRgba.getNativeObjAddr(), h1, h2, s1, s2, v1, v2) + barWeight;
+
             Log.d(TAG, Float.toString(weight));
 
-//      float weight = nativeColorDetect(mRgba.getNativeObjAddr());
+//      float weight = nativeColorDetect(mRgba.getNativeObjAddr()) + barWeight;
 
             if (imageCaptured) {
                 float result = weight;

@@ -34,12 +34,10 @@
         android:hint="weight/mass"
         android:layout_below="@+id/imageView2" />
 
-    <Spinner
+    <TextView
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:id="@+id/unit_spinner"
-        android:spinnerMode="dropdown"
-        android:entries="@array/unit_selection"
+        android:id="@+id/unit_text"
         android:layout_alignTop="@+id/weight_field"
         android:layout_alignEnd="@+id/button"
         android:layout_alignBottom="@+id/weight_field" />

@@ -17,10 +17,7 @@
         <item>exercise 9</item>
     </string-array>
     <string name="title_activity_home">HomeActivity</string>
-    <string-array name="unit_selection">
-        <item>lbs</item>
-        <item>kg</item>
-    </string-array>
+
     <string name="title_exercise_list">Workout</string>
     <string name="title_exercise_detail">Exercise</string>
     <string name="title_activity_main">MainActivity</string>
@@ -67,6 +64,15 @@
         <item>kg</item>
     </string-array>
     <string-array name="pref_units_values">
+        <item>lbs</item>
+        <item>kg</item>
+    </string-array>
+    <string name="pref_title_bar">Bar size</string>
+    <string-array name="pref_bar_selection">
+        <item>45 lb/20 kg</item>
+        <item>35 lb/16 kg </item>
+    </string-array>
+    <string-array name="pref_bar_values">
         <item>0</item>
         <item>1</item>
     </string-array>
