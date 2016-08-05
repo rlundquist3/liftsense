@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
@@ -24,7 +25,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ExerciseListFragment.Callbacks,
-        ProfileFragment.OnFragmentInteractionListener, SettingsFragment.OnFragmentInteractionListener {
+        ProfileFragment.OnFragmentInteractionListener, SettingsFragment.OnFragmentInteractionListener,
+        FirebaseAuth.AuthStateListener {
 
     private FloatingActionButton fab;
 
@@ -86,9 +88,10 @@ public class MainActivity extends AppCompatActivity
             goToSettings();
             return true;
         } else if (id == R.id.action_sign_out) {
-            FirebaseAuth.getInstance().signOut();
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivityForResult(intent, 1);
+//            FirebaseAuth.getInstance().signOut();
+            goToLogin();
+//            Intent intent = new Intent(this, LoginActivity.class);
+//            startActivityForResult(intent, 1);
             return true;
         }
 
@@ -135,7 +138,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void goToProfile() {
-//        Snackbar.make(findViewById(R.id.fragment_container), "go to profile", Snackbar.LENGTH_LONG).show();
         ProfileFragment profileFragment = new ProfileFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, profileFragment);
@@ -181,6 +183,11 @@ public class MainActivity extends AppCompatActivity
         startActivityForResult(intent, 1);
     }
 
+    public void goToLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivityForResult(intent, 1);
+    }
+
     public void setFabCamera() {
         fab.setImageResource(R.drawable.ic_camera_alt__white_24dp);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -218,5 +225,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+        Log.d("D", "auth state changed");
+        if (firebaseAuth.getCurrentUser() == null) {
+            Log.d("D", "auth state changed");
+        }
     }
 }
