@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
@@ -118,7 +119,7 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
 
         mRgba = inputFrame.rgba();
 
-        if (/*imageCaptured*/true) {
+        if (imageCaptured) {
             /**
              * Pass Mat to native environment
              * Return outlines from native
@@ -166,7 +167,6 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
 //      float weight = nativeColorDetect(mRgba.getNativeObjAddr()) + barWeight;
 
             if (imageCaptured) {
-                float result = weight;
 
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("result", weight);
