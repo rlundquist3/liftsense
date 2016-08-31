@@ -21,20 +21,20 @@ Object::Object(string name){
 	setType(name);
 
 	if(name=="green"){
-		setHSVmin(Scalar(22,50,75));
-		setHSVmax(Scalar(80,255,255));
+		setHSVmin(Scalar(35,50,15));
+		setHSVmax(Scalar(70,255,150));
 
 		setColor(Scalar(0,255,0));
 	}
 	else if(name=="blue"){
-		setHSVmin(Scalar(0, 50, 75));
-		setHSVmax(Scalar(20,255,255));
+		setHSVmin(Scalar(0, 50, 10));
+		setHSVmax(Scalar(20,255,100));
 
 		setColor(Scalar(0,0,255));
 	}
 	else if(name=="yellow"){
-		setHSVmin(Scalar(83, 50, 75));
-		setHSVmax(Scalar(90,255,255));
+		setHSVmin(Scalar(85, 50, 75));
+		setHSVmax(Scalar(95,255,255));
 
 		setColor(Scalar(255,255,0));
 	}
@@ -44,12 +44,12 @@ Object::Object(string name){
 
 		setColor(Scalar(255,0,0));
 	}
-	else if(name=="black"){
-		setHSVmin(Scalar(0, 0, 0));
-		setHSVmax(Scalar(179,255,10));
-
-		setColor(Scalar(0,0,0));
-	}
+//	else if(name=="black"){
+//		setHSVmin(Scalar(0, 0, 0));
+//		setHSVmax(Scalar(179,255,10));
+//
+//		setColor(Scalar(0,0,0));
+//	}
 //	if(name=="red"){
 //		setHSVmin(Scalar(92,0,0));
 //		setHSVmax(Scalar(124,256,256));

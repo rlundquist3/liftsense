@@ -152,11 +152,11 @@ jfloat MultipleObjectTracking::detect(jlong imageRgba, jint h1, jint h2, jint s1
 	cvtColor(cameraFeed, hsv, COLOR_BGR2HSV);
 
     vector<Object> colors;
-    colors.push_back(Object("blue"));
+    /*colors.push_back(Object("blue"));
     colors.push_back(Object("yellow"));
     colors.push_back(Object("green"));
 	colors.push_back(Object("red"));
-	colors.push_back(Object("black"));
+	colors.push_back(Object("black"));*/
     colors.push_back(Object(h1, h2, s1, s2, v1, v2));
 
     for (int i=0; i<colors.size(); i++) {

@@ -119,7 +119,7 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
 
         mRgba = inputFrame.rgba();
 
-        if (imageCaptured) {
+        if (/*imageCaptured*/true) {
             /**
              * Pass Mat to native environment
              * Return outlines from native
