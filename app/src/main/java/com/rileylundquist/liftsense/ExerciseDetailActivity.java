@@ -91,7 +91,7 @@ public class ExerciseDetailActivity extends Activity {
             if (resultCode == Activity.RESULT_OK) {
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
                 TextView weightField = (TextView) findViewById(R.id.weight_field);
-                String weightDisplay = Float.toString(data.getFloatExtra("result", 4)) + sharedPref.getString("pref_units", "lbs");
+                String weightDisplay = Float.toString(data.getFloatExtra("result", 4)) + " " + sharedPref.getString("pref_units", "0");
                 weightField.setText(weightDisplay);
             }
             if (resultCode == Activity.RESULT_CANCELED)

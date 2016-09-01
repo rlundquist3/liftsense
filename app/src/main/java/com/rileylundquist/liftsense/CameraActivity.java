@@ -119,7 +119,7 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
 
         mRgba = inputFrame.rgba();
 
-        if (/*imageCaptured*/true) {
+        if (imageCaptured) {
             /**
              * Pass Mat to native environment
              * Return outlines from native
@@ -129,19 +129,6 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
             //mNativeDetector.colorDetect(mRgba, result);
 
             //mRgba = result;
-
-            EditText h1e = (EditText) findViewById(R.id.editTextH);
-            EditText h2e = (EditText) findViewById(R.id.editTextH2);
-            EditText s1e = (EditText) findViewById(R.id.editTextS);
-            EditText s2e = (EditText) findViewById(R.id.editTextS2);
-            EditText v1e = (EditText) findViewById(R.id.editTextV);
-            EditText v2e = (EditText) findViewById(R.id.editTextV2);
-            int h1 = Integer.parseInt(h1e.getText().toString());
-            int h2 = Integer.parseInt(h2e.getText().toString());
-            int s1 = Integer.parseInt(s1e.getText().toString());
-            int s2 = Integer.parseInt(s2e.getText().toString());
-            int v1 = Integer.parseInt(v1e.getText().toString());
-            int v2 = Integer.parseInt(v2e.getText().toString());
 
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
             String barOption = sharedPref.getString("pref_bar_weight", "0");
@@ -160,11 +147,7 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
                     barWeight = 16.0f;
             }
 
-            float weight = 2 * nativeColorDetect2(mRgba.getNativeObjAddr(), h1, h2, s1, s2, v1, v2) + barWeight;
-
-            Log.d(TAG, Float.toString(weight));
-
-//      float weight = nativeColorDetect(mRgba.getNativeObjAddr()) + barWeight;
+            float weight = 2 * nativeColorDetect(mRgba.getNativeObjAddr()) + barWeight;
 
             if (imageCaptured) {
 
@@ -194,6 +177,6 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
         return super.onOptionsItemSelected(item);
     }
 
-//    private native float nativeColorDetect(long inputImage);
-    private native float nativeColorDetect2(long inputImage, int h1, int h2, int s1, int s2, int v1, int v2);
+    private native float nativeColorDetect(long inputImage);
+//    private native float nativeColorDetect2(long inputImage, int h1, int h2, int s1, int s2, int v1, int v2);
 }

@@ -109,38 +109,7 @@ void MultipleObjectTracking::trackFilteredObject(Object theObject,Mat threshold,
  * Formerly main--changed to be function called by main.cpp
  */
 //int main(int argc, char* argv[])
-//jfloat MultipleObjectTracking::detect(jlong imageRgba) {
-//	bool calibrationMode = false;
-//
-//	//Matrix to store each frame of the webcam feed
-//	Mat& cameraFeed = *(Mat*) imageRgba;
-//	Mat threshold;
-//	Mat hsv;
-//
-//	//convert frame from BGR to HSV colorspace
-//	cvtColor(cameraFeed, hsv, COLOR_BGR2HSV);
-//
-//    vector<Object> colors;
-//    colors.push_back(Object("blue"));
-//    colors.push_back(Object("yellow"));
-//    colors.push_back(Object("green"));
-//
-//    for (int i=0; i<colors.size(); i++) {
-//        inRange(hsv, colors[i].getHSVmin(), colors[i].getHSVmax(), threshold);
-////	  inRange(imageRgba, colors[i].getHSVmin(), colors[i].getHSVmax(), threshold);
-//        morphOps(threshold);
-////	  cvtColor(cameraFeed, hsv, COLOR_BGR2HSV);
-//        trackFilteredObject(colors[i], threshold, hsv, cameraFeed);
-//    }
-//
-//	return totalWeight;
-//}
-
-/**
- * Formerly main--changed to be function called by main.cpp
- */
-//int main(int argc, char* argv[])
-jfloat MultipleObjectTracking::detect(jlong imageRgba, jint h1, jint h2, jint s1, jint s2, jint v1, jint v2) {
+jfloat MultipleObjectTracking::detect(jlong imageRgba/*, jint h1, jint h2, jint s1, jint s2, jint v1, jint v2*/) {
 	bool calibrationMode = false;
 
 	//Matrix to store each frame of the webcam feed
@@ -152,12 +121,11 @@ jfloat MultipleObjectTracking::detect(jlong imageRgba, jint h1, jint h2, jint s1
 	cvtColor(cameraFeed, hsv, COLOR_BGR2HSV);
 
     vector<Object> colors;
-    /*colors.push_back(Object("blue"));
+    colors.push_back(Object("blue"));
     colors.push_back(Object("yellow"));
     colors.push_back(Object("green"));
 	colors.push_back(Object("red"));
-	colors.push_back(Object("black"));*/
-    colors.push_back(Object(h1, h2, s1, s2, v1, v2));
+    //colors.push_back(Object(h1, h2, s1, s2, v1, v2));
 
     for (int i=0; i<colors.size(); i++) {
         inRange(hsv, colors[i].getHSVmin(), colors[i].getHSVmax(), threshold);

@@ -22,87 +22,8 @@
         android:layout_gravity="center"
         android:elevation="4dp"
         android:background="@drawable/barbell_button_dark"
-        android:layout_below="@+id/editTextH"
-        android:layout_centerHorizontal="true" />
-
-    <EditText
-        android:layout_width="78dp"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/editTextH"
-        android:autoText="false"
-        android:text="0"
-        android:layout_above="@+id/editTextS"
-        android:layout_alignParentStart="true" />
-
-    <EditText
-        android:layout_width="74dp"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/editTextS"
-        android:text="50"
-        android:layout_above="@+id/editTextV"
-        android:layout_alignParentStart="true" />
-
-    <EditText
-        android:layout_width="83dp"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/editTextV"
-        android:text="50"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
-
-    <EditText
-        android:layout_width="78dp"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/editTextH2"
-        android:layout_gravity="right"
-        android:text="0"
-        android:layout_above="@+id/editTextS2"
-        android:layout_alignParentEnd="true" />
-
-    <EditText
-        android:layout_width="75dp"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/editTextS2"
-        android:layout_gravity="right"
-        android:text="255"
-        android:layout_above="@+id/editTextV2"
-        android:layout_alignParentEnd="true" />
-
-    <EditText
-        android:layout_width="76dp"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/editTextV2"
-        android:layout_gravity="right"
-        android:text="255"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/editTextH2" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Test HSV min"
-        android:id="@+id/textView"
-        android:layout_above="@+id/editTextH"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Test HSV max"
-        android:id="@+id/textView2"
-        android:layout_alignTop="@+id/textView"
-        android:layout_alignParentEnd="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp" />
 
 </RelativeLayout>

@@ -2,6 +2,7 @@ package com.rileylundquist.liftsense;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -20,6 +22,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -87,13 +90,13 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             goToSettings();
             return true;
-        } else if (id == R.id.action_sign_out) {
+        } /*else if (id == R.id.action_sign_out) {
 //            FirebaseAuth.getInstance().signOut();
             goToLogin();
 //            Intent intent = new Intent(this, LoginActivity.class);
 //            startActivityForResult(intent, 1);
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
@@ -215,8 +218,10 @@ public class MainActivity extends AppCompatActivity
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
-                EditText weightField = (EditText) findViewById(R.id.weight_field);
-                weightField.setText(Float.toString(data.getFloatExtra("result", 4)));
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+                TextView weightField = (TextView) findViewById(R.id.weight_field);
+                String weightDisplay = Float.toString(data.getFloatExtra("result", 4)) + " " + sharedPref.getString("pref_units", "0");
+                weightField.setText(weightDisplay);
             }
             if (resultCode == Activity.RESULT_CANCELED)
                 ;
