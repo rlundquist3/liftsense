@@ -105,7 +105,8 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_workout) {
-            goToWorkout();
+//            goToWorkout();
+            goToExercise();
         } else if (id == R.id.nav_camera) {
             goToCamera();
         } else if (id == R.id.nav_manage) {

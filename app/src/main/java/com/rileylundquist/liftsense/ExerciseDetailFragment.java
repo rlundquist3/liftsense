@@ -69,9 +69,9 @@ public class ExerciseDetailFragment extends Fragment implements View.OnClickList
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_exercise_detail, container, false);
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this.getContext());
-        String unit = sharedPref.getString("pref_units", "lbs");
-        ((TextView) rootView.findViewById(R.id.unit_text)).setText(unit);
+//        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+//        String unit = sharedPref.getString("pref_units", "lbs");
+//        ((TextView) rootView.findViewById(R.id.unit_text)).setText(unit);
 
         if (mItem != null) {
             Log.d("TEST", mItem.content);

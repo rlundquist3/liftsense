@@ -3,9 +3,11 @@ package com.rileylundquist.liftsense;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -87,8 +89,10 @@ public class ExerciseDetailActivity extends Activity {
         Log.d("Debug", "activity result returned");
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
-                EditText weightField = (EditText) findViewById(R.id.weight_field);
-                weightField.setText(Float.toString(data.getFloatExtra("result", 4)));
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+                TextView weightField = (TextView) findViewById(R.id.weight_field);
+                String weightDisplay = Float.toString(data.getFloatExtra("result", 4)) + sharedPref.getString("pref_units", "lbs");
+                weightField.setText(weightDisplay);
             }
             if (resultCode == Activity.RESULT_CANCELED)
                 ;
