@@ -160,7 +160,7 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
                     barWeight = 16.0f;
             }
 
-            float weight = nativeColorDetect2(mRgba.getNativeObjAddr(), h1, h2, s1, s2, v1, v2) + barWeight;
+            float weight = 2 * nativeColorDetect2(mRgba.getNativeObjAddr(), h1, h2, s1, s2, v1, v2) + barWeight;
 
             Log.d(TAG, Float.toString(weight));
 
